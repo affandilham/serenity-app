@@ -45,7 +45,15 @@ void main() {
     await tester.tap(find.text('Simpan dan mulai'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Profilmu sudah tersimpan.'), findsOneWidget);
+    expect(find.text('Hari ini'), findsOneWidget);
+
+    await tester.tap(find.text('+ Catat rokok'));
+    await tester.pumpAndSettle();
+    expect(find.text('Catat rokok'), findsOneWidget);
+    await tester.tap(find.text('Catat'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('1 batang'), findsOneWidget);
 
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump(const Duration(milliseconds: 1));

@@ -1203,12 +1203,922 @@ class MotivationsCompanion extends UpdateCompanion<Motivation> {
   }
 }
 
+class $SmokingLogsTable extends SmokingLogs
+    with TableInfo<$SmokingLogsTable, SmokingLog> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SmokingLogsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _smokedAtMeta = const VerificationMeta(
+    'smokedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> smokedAt = GeneratedColumn<DateTime>(
+    'smoked_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cravingLevelMeta = const VerificationMeta(
+    'cravingLevel',
+  );
+  @override
+  late final GeneratedColumn<int> cravingLevel = GeneratedColumn<int>(
+    'craving_level',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    smokedAt,
+    cravingLevel,
+    note,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'smoking_logs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SmokingLog> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('smoked_at')) {
+      context.handle(
+        _smokedAtMeta,
+        smokedAt.isAcceptableOrUnknown(data['smoked_at']!, _smokedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_smokedAtMeta);
+    }
+    if (data.containsKey('craving_level')) {
+      context.handle(
+        _cravingLevelMeta,
+        cravingLevel.isAcceptableOrUnknown(
+          data['craving_level']!,
+          _cravingLevelMeta,
+        ),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SmokingLog map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SmokingLog(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      smokedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}smoked_at'],
+      )!,
+      cravingLevel: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}craving_level'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $SmokingLogsTable createAlias(String alias) {
+    return $SmokingLogsTable(attachedDatabase, alias);
+  }
+}
+
+class SmokingLog extends DataClass implements Insertable<SmokingLog> {
+  final String id;
+  final DateTime smokedAt;
+  final int? cravingLevel;
+  final String? note;
+  final DateTime createdAt;
+  const SmokingLog({
+    required this.id,
+    required this.smokedAt,
+    this.cravingLevel,
+    this.note,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['smoked_at'] = Variable<DateTime>(smokedAt);
+    if (!nullToAbsent || cravingLevel != null) {
+      map['craving_level'] = Variable<int>(cravingLevel);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  SmokingLogsCompanion toCompanion(bool nullToAbsent) {
+    return SmokingLogsCompanion(
+      id: Value(id),
+      smokedAt: Value(smokedAt),
+      cravingLevel: cravingLevel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cravingLevel),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory SmokingLog.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SmokingLog(
+      id: serializer.fromJson<String>(json['id']),
+      smokedAt: serializer.fromJson<DateTime>(json['smokedAt']),
+      cravingLevel: serializer.fromJson<int?>(json['cravingLevel']),
+      note: serializer.fromJson<String?>(json['note']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'smokedAt': serializer.toJson<DateTime>(smokedAt),
+      'cravingLevel': serializer.toJson<int?>(cravingLevel),
+      'note': serializer.toJson<String?>(note),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  SmokingLog copyWith({
+    String? id,
+    DateTime? smokedAt,
+    Value<int?> cravingLevel = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+    DateTime? createdAt,
+  }) => SmokingLog(
+    id: id ?? this.id,
+    smokedAt: smokedAt ?? this.smokedAt,
+    cravingLevel: cravingLevel.present ? cravingLevel.value : this.cravingLevel,
+    note: note.present ? note.value : this.note,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  SmokingLog copyWithCompanion(SmokingLogsCompanion data) {
+    return SmokingLog(
+      id: data.id.present ? data.id.value : this.id,
+      smokedAt: data.smokedAt.present ? data.smokedAt.value : this.smokedAt,
+      cravingLevel: data.cravingLevel.present
+          ? data.cravingLevel.value
+          : this.cravingLevel,
+      note: data.note.present ? data.note.value : this.note,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SmokingLog(')
+          ..write('id: $id, ')
+          ..write('smokedAt: $smokedAt, ')
+          ..write('cravingLevel: $cravingLevel, ')
+          ..write('note: $note, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, smokedAt, cravingLevel, note, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SmokingLog &&
+          other.id == this.id &&
+          other.smokedAt == this.smokedAt &&
+          other.cravingLevel == this.cravingLevel &&
+          other.note == this.note &&
+          other.createdAt == this.createdAt);
+}
+
+class SmokingLogsCompanion extends UpdateCompanion<SmokingLog> {
+  final Value<String> id;
+  final Value<DateTime> smokedAt;
+  final Value<int?> cravingLevel;
+  final Value<String?> note;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const SmokingLogsCompanion({
+    this.id = const Value.absent(),
+    this.smokedAt = const Value.absent(),
+    this.cravingLevel = const Value.absent(),
+    this.note = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SmokingLogsCompanion.insert({
+    required String id,
+    required DateTime smokedAt,
+    this.cravingLevel = const Value.absent(),
+    this.note = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       smokedAt = Value(smokedAt),
+       createdAt = Value(createdAt);
+  static Insertable<SmokingLog> custom({
+    Expression<String>? id,
+    Expression<DateTime>? smokedAt,
+    Expression<int>? cravingLevel,
+    Expression<String>? note,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (smokedAt != null) 'smoked_at': smokedAt,
+      if (cravingLevel != null) 'craving_level': cravingLevel,
+      if (note != null) 'note': note,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SmokingLogsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? smokedAt,
+    Value<int?>? cravingLevel,
+    Value<String?>? note,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return SmokingLogsCompanion(
+      id: id ?? this.id,
+      smokedAt: smokedAt ?? this.smokedAt,
+      cravingLevel: cravingLevel ?? this.cravingLevel,
+      note: note ?? this.note,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (smokedAt.present) {
+      map['smoked_at'] = Variable<DateTime>(smokedAt.value);
+    }
+    if (cravingLevel.present) {
+      map['craving_level'] = Variable<int>(cravingLevel.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SmokingLogsCompanion(')
+          ..write('id: $id, ')
+          ..write('smokedAt: $smokedAt, ')
+          ..write('cravingLevel: $cravingLevel, ')
+          ..write('note: $note, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TriggersTable extends Triggers with TableInfo<$TriggersTable, Trigger> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TriggersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
+    'isDefault',
+  );
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
+    'is_default',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_default" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, isDefault, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'triggers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Trigger> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(
+        _isDefaultMeta,
+        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Trigger map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Trigger(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      isDefault: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_default'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $TriggersTable createAlias(String alias) {
+    return $TriggersTable(attachedDatabase, alias);
+  }
+}
+
+class Trigger extends DataClass implements Insertable<Trigger> {
+  final String id;
+  final String name;
+  final bool isDefault;
+  final DateTime createdAt;
+  const Trigger({
+    required this.id,
+    required this.name,
+    required this.isDefault,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['is_default'] = Variable<bool>(isDefault);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  TriggersCompanion toCompanion(bool nullToAbsent) {
+    return TriggersCompanion(
+      id: Value(id),
+      name: Value(name),
+      isDefault: Value(isDefault),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory Trigger.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Trigger(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      isDefault: serializer.fromJson<bool>(json['isDefault']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'isDefault': serializer.toJson<bool>(isDefault),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  Trigger copyWith({
+    String? id,
+    String? name,
+    bool? isDefault,
+    DateTime? createdAt,
+  }) => Trigger(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    isDefault: isDefault ?? this.isDefault,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  Trigger copyWithCompanion(TriggersCompanion data) {
+    return Trigger(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Trigger(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, isDefault, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Trigger &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.isDefault == this.isDefault &&
+          other.createdAt == this.createdAt);
+}
+
+class TriggersCompanion extends UpdateCompanion<Trigger> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<bool> isDefault;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const TriggersCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TriggersCompanion.insert({
+    required String id,
+    required String name,
+    this.isDefault = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       createdAt = Value(createdAt);
+  static Insertable<Trigger> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<bool>? isDefault,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (isDefault != null) 'is_default': isDefault,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TriggersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<bool>? isDefault,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return TriggersCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      isDefault: isDefault ?? this.isDefault,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TriggersCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SmokingLogTriggersTable extends SmokingLogTriggers
+    with TableInfo<$SmokingLogTriggersTable, SmokingLogTrigger> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SmokingLogTriggersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _smokingLogIdMeta = const VerificationMeta(
+    'smokingLogId',
+  );
+  @override
+  late final GeneratedColumn<String> smokingLogId = GeneratedColumn<String>(
+    'smoking_log_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES smoking_logs (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _triggerIdMeta = const VerificationMeta(
+    'triggerId',
+  );
+  @override
+  late final GeneratedColumn<String> triggerId = GeneratedColumn<String>(
+    'trigger_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES triggers (id) ON DELETE CASCADE',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [smokingLogId, triggerId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'smoking_log_triggers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SmokingLogTrigger> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('smoking_log_id')) {
+      context.handle(
+        _smokingLogIdMeta,
+        smokingLogId.isAcceptableOrUnknown(
+          data['smoking_log_id']!,
+          _smokingLogIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_smokingLogIdMeta);
+    }
+    if (data.containsKey('trigger_id')) {
+      context.handle(
+        _triggerIdMeta,
+        triggerId.isAcceptableOrUnknown(data['trigger_id']!, _triggerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_triggerIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {smokingLogId, triggerId};
+  @override
+  SmokingLogTrigger map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SmokingLogTrigger(
+      smokingLogId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}smoking_log_id'],
+      )!,
+      triggerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}trigger_id'],
+      )!,
+    );
+  }
+
+  @override
+  $SmokingLogTriggersTable createAlias(String alias) {
+    return $SmokingLogTriggersTable(attachedDatabase, alias);
+  }
+}
+
+class SmokingLogTrigger extends DataClass
+    implements Insertable<SmokingLogTrigger> {
+  final String smokingLogId;
+  final String triggerId;
+  const SmokingLogTrigger({
+    required this.smokingLogId,
+    required this.triggerId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['smoking_log_id'] = Variable<String>(smokingLogId);
+    map['trigger_id'] = Variable<String>(triggerId);
+    return map;
+  }
+
+  SmokingLogTriggersCompanion toCompanion(bool nullToAbsent) {
+    return SmokingLogTriggersCompanion(
+      smokingLogId: Value(smokingLogId),
+      triggerId: Value(triggerId),
+    );
+  }
+
+  factory SmokingLogTrigger.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SmokingLogTrigger(
+      smokingLogId: serializer.fromJson<String>(json['smokingLogId']),
+      triggerId: serializer.fromJson<String>(json['triggerId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'smokingLogId': serializer.toJson<String>(smokingLogId),
+      'triggerId': serializer.toJson<String>(triggerId),
+    };
+  }
+
+  SmokingLogTrigger copyWith({String? smokingLogId, String? triggerId}) =>
+      SmokingLogTrigger(
+        smokingLogId: smokingLogId ?? this.smokingLogId,
+        triggerId: triggerId ?? this.triggerId,
+      );
+  SmokingLogTrigger copyWithCompanion(SmokingLogTriggersCompanion data) {
+    return SmokingLogTrigger(
+      smokingLogId: data.smokingLogId.present
+          ? data.smokingLogId.value
+          : this.smokingLogId,
+      triggerId: data.triggerId.present ? data.triggerId.value : this.triggerId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SmokingLogTrigger(')
+          ..write('smokingLogId: $smokingLogId, ')
+          ..write('triggerId: $triggerId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(smokingLogId, triggerId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SmokingLogTrigger &&
+          other.smokingLogId == this.smokingLogId &&
+          other.triggerId == this.triggerId);
+}
+
+class SmokingLogTriggersCompanion extends UpdateCompanion<SmokingLogTrigger> {
+  final Value<String> smokingLogId;
+  final Value<String> triggerId;
+  final Value<int> rowid;
+  const SmokingLogTriggersCompanion({
+    this.smokingLogId = const Value.absent(),
+    this.triggerId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SmokingLogTriggersCompanion.insert({
+    required String smokingLogId,
+    required String triggerId,
+    this.rowid = const Value.absent(),
+  }) : smokingLogId = Value(smokingLogId),
+       triggerId = Value(triggerId);
+  static Insertable<SmokingLogTrigger> custom({
+    Expression<String>? smokingLogId,
+    Expression<String>? triggerId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (smokingLogId != null) 'smoking_log_id': smokingLogId,
+      if (triggerId != null) 'trigger_id': triggerId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SmokingLogTriggersCompanion copyWith({
+    Value<String>? smokingLogId,
+    Value<String>? triggerId,
+    Value<int>? rowid,
+  }) {
+    return SmokingLogTriggersCompanion(
+      smokingLogId: smokingLogId ?? this.smokingLogId,
+      triggerId: triggerId ?? this.triggerId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (smokingLogId.present) {
+      map['smoking_log_id'] = Variable<String>(smokingLogId.value);
+    }
+    if (triggerId.present) {
+      map['trigger_id'] = Variable<String>(triggerId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SmokingLogTriggersCompanion(')
+          ..write('smokingLogId: $smokingLogId, ')
+          ..write('triggerId: $triggerId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $AppMetadataTable appMetadata = $AppMetadataTable(this);
   late final $UserProfilesTable userProfiles = $UserProfilesTable(this);
   late final $MotivationsTable motivations = $MotivationsTable(this);
+  late final $SmokingLogsTable smokingLogs = $SmokingLogsTable(this);
+  late final $TriggersTable triggers = $TriggersTable(this);
+  late final $SmokingLogTriggersTable smokingLogTriggers =
+      $SmokingLogTriggersTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1217,7 +2127,27 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     appMetadata,
     userProfiles,
     motivations,
+    smokingLogs,
+    triggers,
+    smokingLogTriggers,
   ];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'smoking_logs',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('smoking_log_triggers', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'triggers',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('smoking_log_triggers', kind: UpdateKind.delete)],
+    ),
+  ]);
 }
 
 typedef $$AppMetadataTableCreateCompanionBuilder =
@@ -1851,6 +2781,969 @@ typedef $$MotivationsTableProcessedTableManager =
       Motivation,
       PrefetchHooks Function()
     >;
+typedef $$SmokingLogsTableCreateCompanionBuilder =
+    SmokingLogsCompanion Function({
+      required String id,
+      required DateTime smokedAt,
+      Value<int?> cravingLevel,
+      Value<String?> note,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$SmokingLogsTableUpdateCompanionBuilder =
+    SmokingLogsCompanion Function({
+      Value<String> id,
+      Value<DateTime> smokedAt,
+      Value<int?> cravingLevel,
+      Value<String?> note,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$SmokingLogsTableReferences
+    extends BaseReferences<_$AppDatabase, $SmokingLogsTable, SmokingLog> {
+  $$SmokingLogsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$SmokingLogTriggersTable, List<SmokingLogTrigger>>
+  _smokingLogTriggersRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.smokingLogTriggers,
+        aliasName: 'smoking_logs__id__smoking_log_triggers__smoking_log_id',
+      );
+
+  $$SmokingLogTriggersTableProcessedTableManager get smokingLogTriggersRefs {
+    final manager = $$SmokingLogTriggersTableTableManager(
+      $_db,
+      $_db.smokingLogTriggers,
+    ).filter((f) => f.smokingLogId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _smokingLogTriggersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$SmokingLogsTableFilterComposer
+    extends Composer<_$AppDatabase, $SmokingLogsTable> {
+  $$SmokingLogsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get smokedAt => $composableBuilder(
+    column: $table.smokedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get cravingLevel => $composableBuilder(
+    column: $table.cravingLevel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> smokingLogTriggersRefs(
+    Expression<bool> Function($$SmokingLogTriggersTableFilterComposer f) f,
+  ) {
+    final $$SmokingLogTriggersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.smokingLogTriggers,
+      getReferencedColumn: (t) => t.smokingLogId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SmokingLogTriggersTableFilterComposer(
+            $db: $db,
+            $table: $db.smokingLogTriggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SmokingLogsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SmokingLogsTable> {
+  $$SmokingLogsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get smokedAt => $composableBuilder(
+    column: $table.smokedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get cravingLevel => $composableBuilder(
+    column: $table.cravingLevel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SmokingLogsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SmokingLogsTable> {
+  $$SmokingLogsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get smokedAt =>
+      $composableBuilder(column: $table.smokedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get cravingLevel => $composableBuilder(
+    column: $table.cravingLevel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  Expression<T> smokingLogTriggersRefs<T extends Object>(
+    Expression<T> Function($$SmokingLogTriggersTableAnnotationComposer a) f,
+  ) {
+    final $$SmokingLogTriggersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.smokingLogTriggers,
+          getReferencedColumn: (t) => t.smokingLogId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SmokingLogTriggersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.smokingLogTriggers,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$SmokingLogsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SmokingLogsTable,
+          SmokingLog,
+          $$SmokingLogsTableFilterComposer,
+          $$SmokingLogsTableOrderingComposer,
+          $$SmokingLogsTableAnnotationComposer,
+          $$SmokingLogsTableCreateCompanionBuilder,
+          $$SmokingLogsTableUpdateCompanionBuilder,
+          (SmokingLog, $$SmokingLogsTableReferences),
+          SmokingLog,
+          PrefetchHooks Function({bool smokingLogTriggersRefs})
+        > {
+  $$SmokingLogsTableTableManager(_$AppDatabase db, $SmokingLogsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SmokingLogsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SmokingLogsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SmokingLogsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> smokedAt = const Value.absent(),
+                Value<int?> cravingLevel = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SmokingLogsCompanion(
+                id: id,
+                smokedAt: smokedAt,
+                cravingLevel: cravingLevel,
+                note: note,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime smokedAt,
+                Value<int?> cravingLevel = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => SmokingLogsCompanion.insert(
+                id: id,
+                smokedAt: smokedAt,
+                cravingLevel: cravingLevel,
+                note: note,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SmokingLogsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({smokingLogTriggersRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (smokingLogTriggersRefs) db.smokingLogTriggers,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (smokingLogTriggersRefs)
+                    await $_getPrefetchedData<
+                      SmokingLog,
+                      $SmokingLogsTable,
+                      SmokingLogTrigger
+                    >(
+                      currentTable: table,
+                      referencedTable: $$SmokingLogsTableReferences
+                          ._smokingLogTriggersRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$SmokingLogsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).smokingLogTriggersRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.smokingLogId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$SmokingLogsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SmokingLogsTable,
+      SmokingLog,
+      $$SmokingLogsTableFilterComposer,
+      $$SmokingLogsTableOrderingComposer,
+      $$SmokingLogsTableAnnotationComposer,
+      $$SmokingLogsTableCreateCompanionBuilder,
+      $$SmokingLogsTableUpdateCompanionBuilder,
+      (SmokingLog, $$SmokingLogsTableReferences),
+      SmokingLog,
+      PrefetchHooks Function({bool smokingLogTriggersRefs})
+    >;
+typedef $$TriggersTableCreateCompanionBuilder =
+    TriggersCompanion Function({
+      required String id,
+      required String name,
+      Value<bool> isDefault,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$TriggersTableUpdateCompanionBuilder =
+    TriggersCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<bool> isDefault,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$TriggersTableReferences
+    extends BaseReferences<_$AppDatabase, $TriggersTable, Trigger> {
+  $$TriggersTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$SmokingLogTriggersTable, List<SmokingLogTrigger>>
+  _smokingLogTriggersRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.smokingLogTriggers,
+        aliasName: 'triggers__id__smoking_log_triggers__trigger_id',
+      );
+
+  $$SmokingLogTriggersTableProcessedTableManager get smokingLogTriggersRefs {
+    final manager = $$SmokingLogTriggersTableTableManager(
+      $_db,
+      $_db.smokingLogTriggers,
+    ).filter((f) => f.triggerId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _smokingLogTriggersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$TriggersTableFilterComposer
+    extends Composer<_$AppDatabase, $TriggersTable> {
+  $$TriggersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> smokingLogTriggersRefs(
+    Expression<bool> Function($$SmokingLogTriggersTableFilterComposer f) f,
+  ) {
+    final $$SmokingLogTriggersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.smokingLogTriggers,
+      getReferencedColumn: (t) => t.triggerId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SmokingLogTriggersTableFilterComposer(
+            $db: $db,
+            $table: $db.smokingLogTriggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TriggersTableOrderingComposer
+    extends Composer<_$AppDatabase, $TriggersTable> {
+  $$TriggersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TriggersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TriggersTable> {
+  $$TriggersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDefault =>
+      $composableBuilder(column: $table.isDefault, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  Expression<T> smokingLogTriggersRefs<T extends Object>(
+    Expression<T> Function($$SmokingLogTriggersTableAnnotationComposer a) f,
+  ) {
+    final $$SmokingLogTriggersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.smokingLogTriggers,
+          getReferencedColumn: (t) => t.triggerId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SmokingLogTriggersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.smokingLogTriggers,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$TriggersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TriggersTable,
+          Trigger,
+          $$TriggersTableFilterComposer,
+          $$TriggersTableOrderingComposer,
+          $$TriggersTableAnnotationComposer,
+          $$TriggersTableCreateCompanionBuilder,
+          $$TriggersTableUpdateCompanionBuilder,
+          (Trigger, $$TriggersTableReferences),
+          Trigger,
+          PrefetchHooks Function({bool smokingLogTriggersRefs})
+        > {
+  $$TriggersTableTableManager(_$AppDatabase db, $TriggersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TriggersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TriggersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TriggersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TriggersCompanion(
+                id: id,
+                name: name,
+                isDefault: isDefault,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<bool> isDefault = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => TriggersCompanion.insert(
+                id: id,
+                name: name,
+                isDefault: isDefault,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TriggersTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({smokingLogTriggersRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (smokingLogTriggersRefs) db.smokingLogTriggers,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (smokingLogTriggersRefs)
+                    await $_getPrefetchedData<
+                      Trigger,
+                      $TriggersTable,
+                      SmokingLogTrigger
+                    >(
+                      currentTable: table,
+                      referencedTable: $$TriggersTableReferences
+                          ._smokingLogTriggersRefsTable(db),
+                      managerFromTypedResult: (p0) => $$TriggersTableReferences(
+                        db,
+                        table,
+                        p0,
+                      ).smokingLogTriggersRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.triggerId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TriggersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TriggersTable,
+      Trigger,
+      $$TriggersTableFilterComposer,
+      $$TriggersTableOrderingComposer,
+      $$TriggersTableAnnotationComposer,
+      $$TriggersTableCreateCompanionBuilder,
+      $$TriggersTableUpdateCompanionBuilder,
+      (Trigger, $$TriggersTableReferences),
+      Trigger,
+      PrefetchHooks Function({bool smokingLogTriggersRefs})
+    >;
+typedef $$SmokingLogTriggersTableCreateCompanionBuilder =
+    SmokingLogTriggersCompanion Function({
+      required String smokingLogId,
+      required String triggerId,
+      Value<int> rowid,
+    });
+typedef $$SmokingLogTriggersTableUpdateCompanionBuilder =
+    SmokingLogTriggersCompanion Function({
+      Value<String> smokingLogId,
+      Value<String> triggerId,
+      Value<int> rowid,
+    });
+
+final class $$SmokingLogTriggersTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $SmokingLogTriggersTable,
+          SmokingLogTrigger
+        > {
+  $$SmokingLogTriggersTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SmokingLogsTable _smokingLogIdTable(_$AppDatabase db) => db
+      .smokingLogs
+      .createAlias('smoking_log_triggers__smoking_log_id__smoking_logs__id');
+
+  $$SmokingLogsTableProcessedTableManager get smokingLogId {
+    final $_column = $_itemColumn<String>('smoking_log_id')!;
+
+    final manager = $$SmokingLogsTableTableManager(
+      $_db,
+      $_db.smokingLogs,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_smokingLogIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TriggersTable _triggerIdTable(_$AppDatabase db) =>
+      db.triggers.createAlias('smoking_log_triggers__trigger_id__triggers__id');
+
+  $$TriggersTableProcessedTableManager get triggerId {
+    final $_column = $_itemColumn<String>('trigger_id')!;
+
+    final manager = $$TriggersTableTableManager(
+      $_db,
+      $_db.triggers,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_triggerIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$SmokingLogTriggersTableFilterComposer
+    extends Composer<_$AppDatabase, $SmokingLogTriggersTable> {
+  $$SmokingLogTriggersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$SmokingLogsTableFilterComposer get smokingLogId {
+    final $$SmokingLogsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.smokingLogId,
+      referencedTable: $db.smokingLogs,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SmokingLogsTableFilterComposer(
+            $db: $db,
+            $table: $db.smokingLogs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TriggersTableFilterComposer get triggerId {
+    final $$TriggersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.triggerId,
+      referencedTable: $db.triggers,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TriggersTableFilterComposer(
+            $db: $db,
+            $table: $db.triggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SmokingLogTriggersTableOrderingComposer
+    extends Composer<_$AppDatabase, $SmokingLogTriggersTable> {
+  $$SmokingLogTriggersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$SmokingLogsTableOrderingComposer get smokingLogId {
+    final $$SmokingLogsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.smokingLogId,
+      referencedTable: $db.smokingLogs,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SmokingLogsTableOrderingComposer(
+            $db: $db,
+            $table: $db.smokingLogs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TriggersTableOrderingComposer get triggerId {
+    final $$TriggersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.triggerId,
+      referencedTable: $db.triggers,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TriggersTableOrderingComposer(
+            $db: $db,
+            $table: $db.triggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SmokingLogTriggersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SmokingLogTriggersTable> {
+  $$SmokingLogTriggersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$SmokingLogsTableAnnotationComposer get smokingLogId {
+    final $$SmokingLogsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.smokingLogId,
+      referencedTable: $db.smokingLogs,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SmokingLogsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.smokingLogs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TriggersTableAnnotationComposer get triggerId {
+    final $$TriggersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.triggerId,
+      referencedTable: $db.triggers,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TriggersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.triggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SmokingLogTriggersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SmokingLogTriggersTable,
+          SmokingLogTrigger,
+          $$SmokingLogTriggersTableFilterComposer,
+          $$SmokingLogTriggersTableOrderingComposer,
+          $$SmokingLogTriggersTableAnnotationComposer,
+          $$SmokingLogTriggersTableCreateCompanionBuilder,
+          $$SmokingLogTriggersTableUpdateCompanionBuilder,
+          (SmokingLogTrigger, $$SmokingLogTriggersTableReferences),
+          SmokingLogTrigger,
+          PrefetchHooks Function({bool smokingLogId, bool triggerId})
+        > {
+  $$SmokingLogTriggersTableTableManager(
+    _$AppDatabase db,
+    $SmokingLogTriggersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SmokingLogTriggersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SmokingLogTriggersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SmokingLogTriggersTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> smokingLogId = const Value.absent(),
+                Value<String> triggerId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SmokingLogTriggersCompanion(
+                smokingLogId: smokingLogId,
+                triggerId: triggerId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String smokingLogId,
+                required String triggerId,
+                Value<int> rowid = const Value.absent(),
+              }) => SmokingLogTriggersCompanion.insert(
+                smokingLogId: smokingLogId,
+                triggerId: triggerId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SmokingLogTriggersTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({smokingLogId = false, triggerId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (smokingLogId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.smokingLogId,
+                                referencedTable:
+                                    $$SmokingLogTriggersTableReferences
+                                        ._smokingLogIdTable(db),
+                                referencedColumn:
+                                    $$SmokingLogTriggersTableReferences
+                                        ._smokingLogIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (triggerId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.triggerId,
+                                referencedTable:
+                                    $$SmokingLogTriggersTableReferences
+                                        ._triggerIdTable(db),
+                                referencedColumn:
+                                    $$SmokingLogTriggersTableReferences
+                                        ._triggerIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$SmokingLogTriggersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SmokingLogTriggersTable,
+      SmokingLogTrigger,
+      $$SmokingLogTriggersTableFilterComposer,
+      $$SmokingLogTriggersTableOrderingComposer,
+      $$SmokingLogTriggersTableAnnotationComposer,
+      $$SmokingLogTriggersTableCreateCompanionBuilder,
+      $$SmokingLogTriggersTableUpdateCompanionBuilder,
+      (SmokingLogTrigger, $$SmokingLogTriggersTableReferences),
+      SmokingLogTrigger,
+      PrefetchHooks Function({bool smokingLogId, bool triggerId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -1861,4 +3754,10 @@ class $AppDatabaseManager {
       $$UserProfilesTableTableManager(_db, _db.userProfiles);
   $$MotivationsTableTableManager get motivations =>
       $$MotivationsTableTableManager(_db, _db.motivations);
+  $$SmokingLogsTableTableManager get smokingLogs =>
+      $$SmokingLogsTableTableManager(_db, _db.smokingLogs);
+  $$TriggersTableTableManager get triggers =>
+      $$TriggersTableTableManager(_db, _db.triggers);
+  $$SmokingLogTriggersTableTableManager get smokingLogTriggers =>
+      $$SmokingLogTriggersTableTableManager(_db, _db.smokingLogTriggers);
 }

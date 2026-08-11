@@ -12,11 +12,11 @@ Deliver smoking log & triggers as a complete, testable vertical slice while pres
 
 ## Scope
 
-- [ ] Quick smoking log under 10 seconds
-- [ ] Trigger tables and many-to-many mapping
-- [ ] Today dashboard count
-- [ ] Recent timeline
-- [ ] Daily/hour/trigger aggregation foundations
+- [x] Quick smoking log under 10 seconds
+- [x] Trigger tables and many-to-many mapping
+- [x] Today dashboard count
+- [x] Recent timeline
+- [x] Daily/hour/trigger aggregation foundations
 
 ## UX Requirements
 
@@ -43,19 +43,33 @@ Deliver smoking log & triggers as a complete, testable vertical slice while pres
 
 ## Definition of Done
 
-- [ ] Every Scope item is implemented.
-- [ ] Relevant unit/repository/widget tests exist.
-- [ ] No regression in completed milestones.
-- [ ] `dart format .` completed.
-- [ ] `flutter analyze` passes with no unresolved issues.
-- [ ] `flutter test` passes.
-- [ ] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
+- [x] Every Scope item is implemented.
+- [x] Relevant unit/repository/widget tests exist.
+- [x] No regression in completed milestones.
+- [x] `dart format .` completed.
+- [x] `flutter analyze` passes with no unresolved issues.
+- [x] `flutter test` passes.
+- [x] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
 
 ## Completion Report
 
-When finished, report:
-1. Files created/changed.
-2. Architecture or schema decisions made.
-3. Tests added and commands run.
-4. Known limitations, if any.
-5. Whether the repository is ready for Milestone 04.
+Completed on 2026-08-11.
+
+1. Added a quick, optional-detail smoking log sheet that saves the current
+   local time, selected trigger tags, a 1–5 craving level, and an optional
+   note. After save, it confirms calmly and returns to Home.
+2. Added schema version 3 with `smoking_logs`, `triggers`, and
+   `smoking_log_triggers`. The join table has a composite primary key and
+   foreign keys to preserve a real many-to-many relationship. Version-1 and
+   version-2 migration tests verify existing data remains available.
+3. Added a feature-first smoking-log repository and narrow Riverpod providers
+   for the trigger list, today's count, today's timeline, and save controller.
+   Local-day boundaries and local hours are calculated in Dart from local time
+   rather than UTC date strings.
+4. Home now shows a reactive count and newest-first timeline while only their
+   small consumer widgets rebuild for log updates. Repository, migration,
+   provider, and widget-flow tests cover adding logs, multiple triggers,
+   aggregations, ordering, persistence after reload, and reactive updates.
+5. `dart format .`, `flutter analyze`, and `flutter test` pass. There are no
+   known limitations within this milestone. The repository is ready for
+   Milestone 04; Craving SOS remains intentionally unimplemented.

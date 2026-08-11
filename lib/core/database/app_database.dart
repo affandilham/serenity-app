@@ -39,14 +39,54 @@ class Motivations extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [AppMetadata, UserProfiles, Motivations])
+class SmokingLogs extends Table {
+  TextColumn get id => text()();
+  DateTimeColumn get smokedAt => dateTime()();
+  IntColumn get cravingLevel => integer().nullable()();
+  TextColumn get note => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+class Triggers extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  BoolColumn get isDefault => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+class SmokingLogTriggers extends Table {
+  TextColumn get smokingLogId =>
+      text().references(SmokingLogs, #id, onDelete: KeyAction.cascade)();
+  TextColumn get triggerId =>
+      text().references(Triggers, #id, onDelete: KeyAction.cascade)();
+
+  @override
+  Set<Column<Object>> get primaryKey => {smokingLogId, triggerId};
+}
+
+@DriftDatabase(
+  tables: [
+    AppMetadata,
+    UserProfiles,
+    Motivations,
+    SmokingLogs,
+    Triggers,
+    SmokingLogTriggers,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(driftDatabase(name: 'serenity'));
 
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -55,6 +95,11 @@ class AppDatabase extends _$AppDatabase {
       if (from < 2) {
         await migrator.createTable(userProfiles);
         await migrator.createTable(motivations);
+      }
+      if (from < 3) {
+        await migrator.createTable(smokingLogs);
+        await migrator.createTable(triggers);
+        await migrator.createTable(smokingLogTriggers);
       }
     },
   );

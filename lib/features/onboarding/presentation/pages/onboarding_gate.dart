@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../app/theme/app_tokens.dart';
 import '../../../../core/widgets/app_buttons.dart';
 import '../../../../core/widgets/app_scaffold.dart';
+import '../../../smoking_log/presentation/pages/home_page.dart';
 import '../controllers/onboarding_providers.dart';
 import 'onboarding_page.dart';
 
@@ -20,44 +21,8 @@ class OnboardingGate extends ConsumerWidget {
         onRetry: () => ref.invalidate(userProfileProvider),
       ),
       data: (value) => value?.onboardingCompleted == true
-          ? const OnboardingCompletePage()
+          ? const HomePage()
           : const OnboardingPage(),
-    );
-  }
-}
-
-class OnboardingCompletePage extends StatelessWidget {
-  const OnboardingCompletePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return AppScaffold(
-      child: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(AppSpacing.xl),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 520),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Serenity', style: textTheme.displaySmall),
-                const SizedBox(height: AppSpacing.lg),
-                Text(
-                  'Profilmu sudah tersimpan.',
-                  style: textTheme.headlineSmall,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  'Kita akan mulai mencatat dengan tenang di langkah berikutnya.',
-                  style: textTheme.bodyLarge,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
