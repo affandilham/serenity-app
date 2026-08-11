@@ -12,11 +12,11 @@ Deliver onboarding & profile as a complete, testable vertical slice while preser
 
 ## Scope
 
-- [ ] 5-step onboarding
-- [ ] Profile persistence
-- [ ] Goal selection
-- [ ] Personal motivation / why
-- [ ] Baseline cigarettes and pack-price data
+- [x] 5-step onboarding
+- [x] Profile persistence
+- [x] Goal selection
+- [x] Personal motivation / why
+- [x] Baseline cigarettes and pack-price data
 
 ## UX Requirements
 
@@ -44,19 +44,29 @@ Deliver onboarding & profile as a complete, testable vertical slice while preser
 
 ## Definition of Done
 
-- [ ] Every Scope item is implemented.
-- [ ] Relevant unit/repository/widget tests exist.
-- [ ] No regression in completed milestones.
-- [ ] `dart format .` completed.
-- [ ] `flutter analyze` passes with no unresolved issues.
-- [ ] `flutter test` passes.
-- [ ] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
+- [x] Every Scope item is implemented.
+- [x] Relevant unit/repository/widget tests exist.
+- [x] No regression in completed milestones.
+- [x] `dart format .` completed.
+- [x] `flutter analyze` passes with no unresolved issues.
+- [x] `flutter test` passes.
+- [x] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
 
 ## Completion Report
 
-When finished, report:
-1. Files created/changed.
-2. Architecture or schema decisions made.
-3. Tests added and commands run.
-4. Known limitations, if any.
-5. Whether the repository is ready for Milestone 03.
+Completed on 2026-08-11.
+
+1. Added a five-step Serenity onboarding flow for welcome, current smoking
+   pattern, goal, personal motivation, and confirmation. It includes loading,
+   recoverable error, field-validation, saving, and completed-profile states.
+2. Added a feature-first onboarding domain, Drift-backed profile repository,
+   and focused Riverpod providers. The root route now gates first launch into
+   onboarding and shows the locally persisted completion state after saving.
+3. Added schema version 2. It preserves version-1 `app_metadata` data and
+   creates `user_profiles` plus `motivations`; both current-pattern data and
+   an optional private motivation are stored locally in one transaction.
+4. Added domain, repository, migration, and five-step widget-flow tests.
+   `dart format .`, `flutter analyze`, and `flutter test` pass.
+5. No known limitations within milestone scope. The repository is ready for
+   Milestone 03; smoking logging, timeline, craving SOS, quit mode, and charts
+   remain intentionally deferred.
