@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/theme/app_tokens.dart';
 import '../../../../core/widgets/app_buttons.dart';
+import '../../../quit_plan/presentation/controllers/quit_plan_providers.dart';
 import '../../domain/entities/smoking_log.dart';
 import '../controllers/smoking_log_providers.dart';
 
@@ -14,6 +15,12 @@ class QuickSmokingLogSheet extends ConsumerStatefulWidget {
   @override
   ConsumerState<QuickSmokingLogSheet> createState() =>
       _QuickSmokingLogSheetState();
+}
+
+class QuickSmokingLogResult {
+  const QuickSmokingLogResult({required this.isSlip});
+
+  final bool isSlip;
 }
 
 class _QuickSmokingLogSheetState extends ConsumerState<QuickSmokingLogSheet> {
@@ -167,12 +174,13 @@ class _QuickSmokingLogSheetState extends ConsumerState<QuickSmokingLogSheet> {
       );
       return;
     }
-    Navigator.of(context).pop();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Tercatat. Kita pakai ini untuk memahami polamu.'),
-      ),
-    );
+    final isSlip = await ref
+        .read(quitPlanControllerProvider.notifier)
+        .assessSmokingEvent(_openedAt);
+    if (!mounted) {
+      return;
+    }
+    Navigator.of(context).pop(QuickSmokingLogResult(isSlip: isSlip));
   }
 
   String _formatTime(DateTime time) {

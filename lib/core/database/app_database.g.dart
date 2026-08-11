@@ -2585,6 +2585,865 @@ class CravingSessionsCompanion extends UpdateCompanion<CravingSession> {
   }
 }
 
+class $QuitPlansTable extends QuitPlans
+    with TableInfo<$QuitPlansTable, QuitPlan> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $QuitPlansTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quitDateMeta = const VerificationMeta(
+    'quitDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> quitDate = GeneratedColumn<DateTime>(
+    'quit_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _primaryMotivationIdMeta =
+      const VerificationMeta('primaryMotivationId');
+  @override
+  late final GeneratedColumn<String> primaryMotivationId =
+      GeneratedColumn<String>(
+        'primary_motivation_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES motivations (id) ON DELETE SET NULL',
+        ),
+      );
+  static const VerificationMeta _supportPersonMeta = const VerificationMeta(
+    'supportPerson',
+  );
+  @override
+  late final GeneratedColumn<String> supportPerson = GeneratedColumn<String>(
+    'support_person',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    quitDate,
+    primaryMotivationId,
+    supportPerson,
+    status,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'quit_plans';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<QuitPlan> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('quit_date')) {
+      context.handle(
+        _quitDateMeta,
+        quitDate.isAcceptableOrUnknown(data['quit_date']!, _quitDateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_quitDateMeta);
+    }
+    if (data.containsKey('primary_motivation_id')) {
+      context.handle(
+        _primaryMotivationIdMeta,
+        primaryMotivationId.isAcceptableOrUnknown(
+          data['primary_motivation_id']!,
+          _primaryMotivationIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('support_person')) {
+      context.handle(
+        _supportPersonMeta,
+        supportPerson.isAcceptableOrUnknown(
+          data['support_person']!,
+          _supportPersonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  QuitPlan map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return QuitPlan(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      quitDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}quit_date'],
+      )!,
+      primaryMotivationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}primary_motivation_id'],
+      ),
+      supportPerson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}support_person'],
+      ),
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $QuitPlansTable createAlias(String alias) {
+    return $QuitPlansTable(attachedDatabase, alias);
+  }
+}
+
+class QuitPlan extends DataClass implements Insertable<QuitPlan> {
+  final String id;
+  final DateTime quitDate;
+  final String? primaryMotivationId;
+  final String? supportPerson;
+  final String status;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const QuitPlan({
+    required this.id,
+    required this.quitDate,
+    this.primaryMotivationId,
+    this.supportPerson,
+    required this.status,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['quit_date'] = Variable<DateTime>(quitDate);
+    if (!nullToAbsent || primaryMotivationId != null) {
+      map['primary_motivation_id'] = Variable<String>(primaryMotivationId);
+    }
+    if (!nullToAbsent || supportPerson != null) {
+      map['support_person'] = Variable<String>(supportPerson);
+    }
+    map['status'] = Variable<String>(status);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  QuitPlansCompanion toCompanion(bool nullToAbsent) {
+    return QuitPlansCompanion(
+      id: Value(id),
+      quitDate: Value(quitDate),
+      primaryMotivationId: primaryMotivationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(primaryMotivationId),
+      supportPerson: supportPerson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(supportPerson),
+      status: Value(status),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory QuitPlan.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return QuitPlan(
+      id: serializer.fromJson<String>(json['id']),
+      quitDate: serializer.fromJson<DateTime>(json['quitDate']),
+      primaryMotivationId: serializer.fromJson<String?>(
+        json['primaryMotivationId'],
+      ),
+      supportPerson: serializer.fromJson<String?>(json['supportPerson']),
+      status: serializer.fromJson<String>(json['status']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'quitDate': serializer.toJson<DateTime>(quitDate),
+      'primaryMotivationId': serializer.toJson<String?>(primaryMotivationId),
+      'supportPerson': serializer.toJson<String?>(supportPerson),
+      'status': serializer.toJson<String>(status),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  QuitPlan copyWith({
+    String? id,
+    DateTime? quitDate,
+    Value<String?> primaryMotivationId = const Value.absent(),
+    Value<String?> supportPerson = const Value.absent(),
+    String? status,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => QuitPlan(
+    id: id ?? this.id,
+    quitDate: quitDate ?? this.quitDate,
+    primaryMotivationId: primaryMotivationId.present
+        ? primaryMotivationId.value
+        : this.primaryMotivationId,
+    supportPerson: supportPerson.present
+        ? supportPerson.value
+        : this.supportPerson,
+    status: status ?? this.status,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  QuitPlan copyWithCompanion(QuitPlansCompanion data) {
+    return QuitPlan(
+      id: data.id.present ? data.id.value : this.id,
+      quitDate: data.quitDate.present ? data.quitDate.value : this.quitDate,
+      primaryMotivationId: data.primaryMotivationId.present
+          ? data.primaryMotivationId.value
+          : this.primaryMotivationId,
+      supportPerson: data.supportPerson.present
+          ? data.supportPerson.value
+          : this.supportPerson,
+      status: data.status.present ? data.status.value : this.status,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuitPlan(')
+          ..write('id: $id, ')
+          ..write('quitDate: $quitDate, ')
+          ..write('primaryMotivationId: $primaryMotivationId, ')
+          ..write('supportPerson: $supportPerson, ')
+          ..write('status: $status, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    quitDate,
+    primaryMotivationId,
+    supportPerson,
+    status,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is QuitPlan &&
+          other.id == this.id &&
+          other.quitDate == this.quitDate &&
+          other.primaryMotivationId == this.primaryMotivationId &&
+          other.supportPerson == this.supportPerson &&
+          other.status == this.status &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class QuitPlansCompanion extends UpdateCompanion<QuitPlan> {
+  final Value<String> id;
+  final Value<DateTime> quitDate;
+  final Value<String?> primaryMotivationId;
+  final Value<String?> supportPerson;
+  final Value<String> status;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const QuitPlansCompanion({
+    this.id = const Value.absent(),
+    this.quitDate = const Value.absent(),
+    this.primaryMotivationId = const Value.absent(),
+    this.supportPerson = const Value.absent(),
+    this.status = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  QuitPlansCompanion.insert({
+    required String id,
+    required DateTime quitDate,
+    this.primaryMotivationId = const Value.absent(),
+    this.supportPerson = const Value.absent(),
+    required String status,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       quitDate = Value(quitDate),
+       status = Value(status),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<QuitPlan> custom({
+    Expression<String>? id,
+    Expression<DateTime>? quitDate,
+    Expression<String>? primaryMotivationId,
+    Expression<String>? supportPerson,
+    Expression<String>? status,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (quitDate != null) 'quit_date': quitDate,
+      if (primaryMotivationId != null)
+        'primary_motivation_id': primaryMotivationId,
+      if (supportPerson != null) 'support_person': supportPerson,
+      if (status != null) 'status': status,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  QuitPlansCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? quitDate,
+    Value<String?>? primaryMotivationId,
+    Value<String?>? supportPerson,
+    Value<String>? status,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return QuitPlansCompanion(
+      id: id ?? this.id,
+      quitDate: quitDate ?? this.quitDate,
+      primaryMotivationId: primaryMotivationId ?? this.primaryMotivationId,
+      supportPerson: supportPerson ?? this.supportPerson,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (quitDate.present) {
+      map['quit_date'] = Variable<DateTime>(quitDate.value);
+    }
+    if (primaryMotivationId.present) {
+      map['primary_motivation_id'] = Variable<String>(
+        primaryMotivationId.value,
+      );
+    }
+    if (supportPerson.present) {
+      map['support_person'] = Variable<String>(supportPerson.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuitPlansCompanion(')
+          ..write('id: $id, ')
+          ..write('quitDate: $quitDate, ')
+          ..write('primaryMotivationId: $primaryMotivationId, ')
+          ..write('supportPerson: $supportPerson, ')
+          ..write('status: $status, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $QuitPlanStrategiesTable extends QuitPlanStrategies
+    with TableInfo<$QuitPlanStrategiesTable, QuitPlanStrategy> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $QuitPlanStrategiesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quitPlanIdMeta = const VerificationMeta(
+    'quitPlanId',
+  );
+  @override
+  late final GeneratedColumn<String> quitPlanId = GeneratedColumn<String>(
+    'quit_plan_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES quit_plans (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _triggerIdMeta = const VerificationMeta(
+    'triggerId',
+  );
+  @override
+  late final GeneratedColumn<String> triggerId = GeneratedColumn<String>(
+    'trigger_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES triggers (id) ON DELETE SET NULL',
+    ),
+  );
+  static const VerificationMeta _actionMeta = const VerificationMeta('action');
+  @override
+  late final GeneratedColumn<String> action = GeneratedColumn<String>(
+    'action',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    quitPlanId,
+    triggerId,
+    action,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'quit_plan_strategies';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<QuitPlanStrategy> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('quit_plan_id')) {
+      context.handle(
+        _quitPlanIdMeta,
+        quitPlanId.isAcceptableOrUnknown(
+          data['quit_plan_id']!,
+          _quitPlanIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_quitPlanIdMeta);
+    }
+    if (data.containsKey('trigger_id')) {
+      context.handle(
+        _triggerIdMeta,
+        triggerId.isAcceptableOrUnknown(data['trigger_id']!, _triggerIdMeta),
+      );
+    }
+    if (data.containsKey('action')) {
+      context.handle(
+        _actionMeta,
+        action.isAcceptableOrUnknown(data['action']!, _actionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_actionMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  QuitPlanStrategy map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return QuitPlanStrategy(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      quitPlanId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}quit_plan_id'],
+      )!,
+      triggerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}trigger_id'],
+      ),
+      action: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}action'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $QuitPlanStrategiesTable createAlias(String alias) {
+    return $QuitPlanStrategiesTable(attachedDatabase, alias);
+  }
+}
+
+class QuitPlanStrategy extends DataClass
+    implements Insertable<QuitPlanStrategy> {
+  final String id;
+  final String quitPlanId;
+  final String? triggerId;
+  final String action;
+  final DateTime createdAt;
+  const QuitPlanStrategy({
+    required this.id,
+    required this.quitPlanId,
+    this.triggerId,
+    required this.action,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['quit_plan_id'] = Variable<String>(quitPlanId);
+    if (!nullToAbsent || triggerId != null) {
+      map['trigger_id'] = Variable<String>(triggerId);
+    }
+    map['action'] = Variable<String>(action);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  QuitPlanStrategiesCompanion toCompanion(bool nullToAbsent) {
+    return QuitPlanStrategiesCompanion(
+      id: Value(id),
+      quitPlanId: Value(quitPlanId),
+      triggerId: triggerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(triggerId),
+      action: Value(action),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory QuitPlanStrategy.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return QuitPlanStrategy(
+      id: serializer.fromJson<String>(json['id']),
+      quitPlanId: serializer.fromJson<String>(json['quitPlanId']),
+      triggerId: serializer.fromJson<String?>(json['triggerId']),
+      action: serializer.fromJson<String>(json['action']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'quitPlanId': serializer.toJson<String>(quitPlanId),
+      'triggerId': serializer.toJson<String?>(triggerId),
+      'action': serializer.toJson<String>(action),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  QuitPlanStrategy copyWith({
+    String? id,
+    String? quitPlanId,
+    Value<String?> triggerId = const Value.absent(),
+    String? action,
+    DateTime? createdAt,
+  }) => QuitPlanStrategy(
+    id: id ?? this.id,
+    quitPlanId: quitPlanId ?? this.quitPlanId,
+    triggerId: triggerId.present ? triggerId.value : this.triggerId,
+    action: action ?? this.action,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  QuitPlanStrategy copyWithCompanion(QuitPlanStrategiesCompanion data) {
+    return QuitPlanStrategy(
+      id: data.id.present ? data.id.value : this.id,
+      quitPlanId: data.quitPlanId.present
+          ? data.quitPlanId.value
+          : this.quitPlanId,
+      triggerId: data.triggerId.present ? data.triggerId.value : this.triggerId,
+      action: data.action.present ? data.action.value : this.action,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuitPlanStrategy(')
+          ..write('id: $id, ')
+          ..write('quitPlanId: $quitPlanId, ')
+          ..write('triggerId: $triggerId, ')
+          ..write('action: $action, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, quitPlanId, triggerId, action, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is QuitPlanStrategy &&
+          other.id == this.id &&
+          other.quitPlanId == this.quitPlanId &&
+          other.triggerId == this.triggerId &&
+          other.action == this.action &&
+          other.createdAt == this.createdAt);
+}
+
+class QuitPlanStrategiesCompanion extends UpdateCompanion<QuitPlanStrategy> {
+  final Value<String> id;
+  final Value<String> quitPlanId;
+  final Value<String?> triggerId;
+  final Value<String> action;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const QuitPlanStrategiesCompanion({
+    this.id = const Value.absent(),
+    this.quitPlanId = const Value.absent(),
+    this.triggerId = const Value.absent(),
+    this.action = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  QuitPlanStrategiesCompanion.insert({
+    required String id,
+    required String quitPlanId,
+    this.triggerId = const Value.absent(),
+    required String action,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       quitPlanId = Value(quitPlanId),
+       action = Value(action),
+       createdAt = Value(createdAt);
+  static Insertable<QuitPlanStrategy> custom({
+    Expression<String>? id,
+    Expression<String>? quitPlanId,
+    Expression<String>? triggerId,
+    Expression<String>? action,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (quitPlanId != null) 'quit_plan_id': quitPlanId,
+      if (triggerId != null) 'trigger_id': triggerId,
+      if (action != null) 'action': action,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  QuitPlanStrategiesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? quitPlanId,
+    Value<String?>? triggerId,
+    Value<String>? action,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return QuitPlanStrategiesCompanion(
+      id: id ?? this.id,
+      quitPlanId: quitPlanId ?? this.quitPlanId,
+      triggerId: triggerId ?? this.triggerId,
+      action: action ?? this.action,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (quitPlanId.present) {
+      map['quit_plan_id'] = Variable<String>(quitPlanId.value);
+    }
+    if (triggerId.present) {
+      map['trigger_id'] = Variable<String>(triggerId.value);
+    }
+    if (action.present) {
+      map['action'] = Variable<String>(action.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuitPlanStrategiesCompanion(')
+          ..write('id: $id, ')
+          ..write('quitPlanId: $quitPlanId, ')
+          ..write('triggerId: $triggerId, ')
+          ..write('action: $action, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2598,6 +3457,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CravingSessionsTable cravingSessions = $CravingSessionsTable(
     this,
   );
+  late final $QuitPlansTable quitPlans = $QuitPlansTable(this);
+  late final $QuitPlanStrategiesTable quitPlanStrategies =
+      $QuitPlanStrategiesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2610,6 +3472,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     triggers,
     smokingLogTriggers,
     cravingSessions,
+    quitPlans,
+    quitPlanStrategies,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -2626,6 +3490,27 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('smoking_log_triggers', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'motivations',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('quit_plans', kind: UpdateKind.update)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'quit_plans',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('quit_plan_strategies', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'triggers',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('quit_plan_strategies', kind: UpdateKind.update)],
     ),
   ]);
 }
@@ -3061,6 +3946,28 @@ typedef $$MotivationsTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
+final class $$MotivationsTableReferences
+    extends BaseReferences<_$AppDatabase, $MotivationsTable, Motivation> {
+  $$MotivationsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$QuitPlansTable, List<QuitPlan>>
+  _quitPlansRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.quitPlans,
+    aliasName: 'motivations__id__quit_plans__primary_motivation_id',
+  );
+
+  $$QuitPlansTableProcessedTableManager get quitPlansRefs {
+    final manager = $$QuitPlansTableTableManager($_db, $_db.quitPlans).filter(
+      (f) => f.primaryMotivationId.id.sqlEquals($_itemColumn<String>('id')!),
+    );
+
+    final cache = $_typedResult.readTableOrNull(_quitPlansRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
 class $$MotivationsTableFilterComposer
     extends Composer<_$AppDatabase, $MotivationsTable> {
   $$MotivationsTableFilterComposer({
@@ -3099,6 +4006,31 @@ class $$MotivationsTableFilterComposer
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
+
+  Expression<bool> quitPlansRefs(
+    Expression<bool> Function($$QuitPlansTableFilterComposer f) f,
+  ) {
+    final $$QuitPlansTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.quitPlans,
+      getReferencedColumn: (t) => t.primaryMotivationId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuitPlansTableFilterComposer(
+            $db: $db,
+            $table: $db.quitPlans,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$MotivationsTableOrderingComposer
@@ -3169,6 +4101,31 @@ class $$MotivationsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  Expression<T> quitPlansRefs<T extends Object>(
+    Expression<T> Function($$QuitPlansTableAnnotationComposer a) f,
+  ) {
+    final $$QuitPlansTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.quitPlans,
+      getReferencedColumn: (t) => t.primaryMotivationId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuitPlansTableAnnotationComposer(
+            $db: $db,
+            $table: $db.quitPlans,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$MotivationsTableTableManager
@@ -3182,12 +4139,9 @@ class $$MotivationsTableTableManager
           $$MotivationsTableAnnotationComposer,
           $$MotivationsTableCreateCompanionBuilder,
           $$MotivationsTableUpdateCompanionBuilder,
-          (
-            Motivation,
-            BaseReferences<_$AppDatabase, $MotivationsTable, Motivation>,
-          ),
+          (Motivation, $$MotivationsTableReferences),
           Motivation,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool quitPlansRefs})
         > {
   $$MotivationsTableTableManager(_$AppDatabase db, $MotivationsTable table)
     : super(
@@ -3237,9 +4191,45 @@ class $$MotivationsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MotivationsTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({quitPlansRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (quitPlansRefs) db.quitPlans],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (quitPlansRefs)
+                    await $_getPrefetchedData<
+                      Motivation,
+                      $MotivationsTable,
+                      QuitPlan
+                    >(
+                      currentTable: table,
+                      referencedTable: $$MotivationsTableReferences
+                          ._quitPlansRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$MotivationsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).quitPlansRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.primaryMotivationId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
         ),
       );
 }
@@ -3254,12 +4244,9 @@ typedef $$MotivationsTableProcessedTableManager =
       $$MotivationsTableAnnotationComposer,
       $$MotivationsTableCreateCompanionBuilder,
       $$MotivationsTableUpdateCompanionBuilder,
-      (
-        Motivation,
-        BaseReferences<_$AppDatabase, $MotivationsTable, Motivation>,
-      ),
+      (Motivation, $$MotivationsTableReferences),
       Motivation,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool quitPlansRefs})
     >;
 typedef $$SmokingLogsTableCreateCompanionBuilder =
     SmokingLogsCompanion Function({
@@ -3613,6 +4600,27 @@ final class $$TriggersTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$QuitPlanStrategiesTable, List<QuitPlanStrategy>>
+  _quitPlanStrategiesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.quitPlanStrategies,
+        aliasName: 'triggers__id__quit_plan_strategies__trigger_id',
+      );
+
+  $$QuitPlanStrategiesTableProcessedTableManager get quitPlanStrategiesRefs {
+    final manager = $$QuitPlanStrategiesTableTableManager(
+      $_db,
+      $_db.quitPlanStrategies,
+    ).filter((f) => f.triggerId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _quitPlanStrategiesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$TriggersTableFilterComposer
@@ -3660,6 +4668,31 @@ class $$TriggersTableFilterComposer
           }) => $$SmokingLogTriggersTableFilterComposer(
             $db: $db,
             $table: $db.smokingLogTriggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> quitPlanStrategiesRefs(
+    Expression<bool> Function($$QuitPlanStrategiesTableFilterComposer f) f,
+  ) {
+    final $$QuitPlanStrategiesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.quitPlanStrategies,
+      getReferencedColumn: (t) => t.triggerId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuitPlanStrategiesTableFilterComposer(
+            $db: $db,
+            $table: $db.quitPlanStrategies,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -3746,6 +4779,32 @@ class $$TriggersTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> quitPlanStrategiesRefs<T extends Object>(
+    Expression<T> Function($$QuitPlanStrategiesTableAnnotationComposer a) f,
+  ) {
+    final $$QuitPlanStrategiesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.quitPlanStrategies,
+          getReferencedColumn: (t) => t.triggerId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$QuitPlanStrategiesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.quitPlanStrategies,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$TriggersTableTableManager
@@ -3761,7 +4820,10 @@ class $$TriggersTableTableManager
           $$TriggersTableUpdateCompanionBuilder,
           (Trigger, $$TriggersTableReferences),
           Trigger,
-          PrefetchHooks Function({bool smokingLogTriggersRefs})
+          PrefetchHooks Function({
+            bool smokingLogTriggersRefs,
+            bool quitPlanStrategiesRefs,
+          })
         > {
   $$TriggersTableTableManager(_$AppDatabase db, $TriggersTable table)
     : super(
@@ -3810,37 +4872,66 @@ class $$TriggersTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({smokingLogTriggersRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (smokingLogTriggersRefs) db.smokingLogTriggers,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (smokingLogTriggersRefs)
-                    await $_getPrefetchedData<
-                      Trigger,
-                      $TriggersTable,
-                      SmokingLogTrigger
-                    >(
-                      currentTable: table,
-                      referencedTable: $$TriggersTableReferences
-                          ._smokingLogTriggersRefsTable(db),
-                      managerFromTypedResult: (p0) => $$TriggersTableReferences(
-                        db,
-                        table,
-                        p0,
-                      ).smokingLogTriggersRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.triggerId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({
+                smokingLogTriggersRefs = false,
+                quitPlanStrategiesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (smokingLogTriggersRefs) db.smokingLogTriggers,
+                    if (quitPlanStrategiesRefs) db.quitPlanStrategies,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (smokingLogTriggersRefs)
+                        await $_getPrefetchedData<
+                          Trigger,
+                          $TriggersTable,
+                          SmokingLogTrigger
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TriggersTableReferences
+                              ._smokingLogTriggersRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TriggersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).smokingLogTriggersRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.triggerId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (quitPlanStrategiesRefs)
+                        await $_getPrefetchedData<
+                          Trigger,
+                          $TriggersTable,
+                          QuitPlanStrategy
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TriggersTableReferences
+                              ._quitPlanStrategiesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TriggersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).quitPlanStrategiesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.triggerId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -3857,7 +4948,10 @@ typedef $$TriggersTableProcessedTableManager =
       $$TriggersTableUpdateCompanionBuilder,
       (Trigger, $$TriggersTableReferences),
       Trigger,
-      PrefetchHooks Function({bool smokingLogTriggersRefs})
+      PrefetchHooks Function({
+        bool smokingLogTriggersRefs,
+        bool quitPlanStrategiesRefs,
+      })
     >;
 typedef $$SmokingLogTriggersTableCreateCompanionBuilder =
     SmokingLogTriggersCompanion Function({
@@ -4472,6 +5566,888 @@ typedef $$CravingSessionsTableProcessedTableManager =
       CravingSession,
       PrefetchHooks Function()
     >;
+typedef $$QuitPlansTableCreateCompanionBuilder =
+    QuitPlansCompanion Function({
+      required String id,
+      required DateTime quitDate,
+      Value<String?> primaryMotivationId,
+      Value<String?> supportPerson,
+      required String status,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$QuitPlansTableUpdateCompanionBuilder =
+    QuitPlansCompanion Function({
+      Value<String> id,
+      Value<DateTime> quitDate,
+      Value<String?> primaryMotivationId,
+      Value<String?> supportPerson,
+      Value<String> status,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$QuitPlansTableReferences
+    extends BaseReferences<_$AppDatabase, $QuitPlansTable, QuitPlan> {
+  $$QuitPlansTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $MotivationsTable _primaryMotivationIdTable(_$AppDatabase db) => db
+      .motivations
+      .createAlias('quit_plans__primary_motivation_id__motivations__id');
+
+  $$MotivationsTableProcessedTableManager? get primaryMotivationId {
+    final $_column = $_itemColumn<String>('primary_motivation_id');
+    if ($_column == null) return null;
+    final manager = $$MotivationsTableTableManager(
+      $_db,
+      $_db.motivations,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_primaryMotivationIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$QuitPlanStrategiesTable, List<QuitPlanStrategy>>
+  _quitPlanStrategiesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.quitPlanStrategies,
+        aliasName: 'quit_plans__id__quit_plan_strategies__quit_plan_id',
+      );
+
+  $$QuitPlanStrategiesTableProcessedTableManager get quitPlanStrategiesRefs {
+    final manager = $$QuitPlanStrategiesTableTableManager(
+      $_db,
+      $_db.quitPlanStrategies,
+    ).filter((f) => f.quitPlanId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _quitPlanStrategiesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$QuitPlansTableFilterComposer
+    extends Composer<_$AppDatabase, $QuitPlansTable> {
+  $$QuitPlansTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get quitDate => $composableBuilder(
+    column: $table.quitDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get supportPerson => $composableBuilder(
+    column: $table.supportPerson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MotivationsTableFilterComposer get primaryMotivationId {
+    final $$MotivationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.primaryMotivationId,
+      referencedTable: $db.motivations,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MotivationsTableFilterComposer(
+            $db: $db,
+            $table: $db.motivations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> quitPlanStrategiesRefs(
+    Expression<bool> Function($$QuitPlanStrategiesTableFilterComposer f) f,
+  ) {
+    final $$QuitPlanStrategiesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.quitPlanStrategies,
+      getReferencedColumn: (t) => t.quitPlanId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuitPlanStrategiesTableFilterComposer(
+            $db: $db,
+            $table: $db.quitPlanStrategies,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$QuitPlansTableOrderingComposer
+    extends Composer<_$AppDatabase, $QuitPlansTable> {
+  $$QuitPlansTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get quitDate => $composableBuilder(
+    column: $table.quitDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get supportPerson => $composableBuilder(
+    column: $table.supportPerson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MotivationsTableOrderingComposer get primaryMotivationId {
+    final $$MotivationsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.primaryMotivationId,
+      referencedTable: $db.motivations,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MotivationsTableOrderingComposer(
+            $db: $db,
+            $table: $db.motivations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$QuitPlansTableAnnotationComposer
+    extends Composer<_$AppDatabase, $QuitPlansTable> {
+  $$QuitPlansTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get quitDate =>
+      $composableBuilder(column: $table.quitDate, builder: (column) => column);
+
+  GeneratedColumn<String> get supportPerson => $composableBuilder(
+    column: $table.supportPerson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$MotivationsTableAnnotationComposer get primaryMotivationId {
+    final $$MotivationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.primaryMotivationId,
+      referencedTable: $db.motivations,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MotivationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.motivations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> quitPlanStrategiesRefs<T extends Object>(
+    Expression<T> Function($$QuitPlanStrategiesTableAnnotationComposer a) f,
+  ) {
+    final $$QuitPlanStrategiesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.quitPlanStrategies,
+          getReferencedColumn: (t) => t.quitPlanId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$QuitPlanStrategiesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.quitPlanStrategies,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$QuitPlansTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $QuitPlansTable,
+          QuitPlan,
+          $$QuitPlansTableFilterComposer,
+          $$QuitPlansTableOrderingComposer,
+          $$QuitPlansTableAnnotationComposer,
+          $$QuitPlansTableCreateCompanionBuilder,
+          $$QuitPlansTableUpdateCompanionBuilder,
+          (QuitPlan, $$QuitPlansTableReferences),
+          QuitPlan,
+          PrefetchHooks Function({
+            bool primaryMotivationId,
+            bool quitPlanStrategiesRefs,
+          })
+        > {
+  $$QuitPlansTableTableManager(_$AppDatabase db, $QuitPlansTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$QuitPlansTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$QuitPlansTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$QuitPlansTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> quitDate = const Value.absent(),
+                Value<String?> primaryMotivationId = const Value.absent(),
+                Value<String?> supportPerson = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => QuitPlansCompanion(
+                id: id,
+                quitDate: quitDate,
+                primaryMotivationId: primaryMotivationId,
+                supportPerson: supportPerson,
+                status: status,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime quitDate,
+                Value<String?> primaryMotivationId = const Value.absent(),
+                Value<String?> supportPerson = const Value.absent(),
+                required String status,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => QuitPlansCompanion.insert(
+                id: id,
+                quitDate: quitDate,
+                primaryMotivationId: primaryMotivationId,
+                supportPerson: supportPerson,
+                status: status,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$QuitPlansTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({primaryMotivationId = false, quitPlanStrategiesRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (quitPlanStrategiesRefs) db.quitPlanStrategies,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (primaryMotivationId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.primaryMotivationId,
+                                    referencedTable: $$QuitPlansTableReferences
+                                        ._primaryMotivationIdTable(db),
+                                    referencedColumn: $$QuitPlansTableReferences
+                                        ._primaryMotivationIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (quitPlanStrategiesRefs)
+                        await $_getPrefetchedData<
+                          QuitPlan,
+                          $QuitPlansTable,
+                          QuitPlanStrategy
+                        >(
+                          currentTable: table,
+                          referencedTable: $$QuitPlansTableReferences
+                              ._quitPlanStrategiesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$QuitPlansTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).quitPlanStrategiesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.quitPlanId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$QuitPlansTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $QuitPlansTable,
+      QuitPlan,
+      $$QuitPlansTableFilterComposer,
+      $$QuitPlansTableOrderingComposer,
+      $$QuitPlansTableAnnotationComposer,
+      $$QuitPlansTableCreateCompanionBuilder,
+      $$QuitPlansTableUpdateCompanionBuilder,
+      (QuitPlan, $$QuitPlansTableReferences),
+      QuitPlan,
+      PrefetchHooks Function({
+        bool primaryMotivationId,
+        bool quitPlanStrategiesRefs,
+      })
+    >;
+typedef $$QuitPlanStrategiesTableCreateCompanionBuilder =
+    QuitPlanStrategiesCompanion Function({
+      required String id,
+      required String quitPlanId,
+      Value<String?> triggerId,
+      required String action,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$QuitPlanStrategiesTableUpdateCompanionBuilder =
+    QuitPlanStrategiesCompanion Function({
+      Value<String> id,
+      Value<String> quitPlanId,
+      Value<String?> triggerId,
+      Value<String> action,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$QuitPlanStrategiesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $QuitPlanStrategiesTable,
+          QuitPlanStrategy
+        > {
+  $$QuitPlanStrategiesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $QuitPlansTable _quitPlanIdTable(_$AppDatabase db) => db.quitPlans
+      .createAlias('quit_plan_strategies__quit_plan_id__quit_plans__id');
+
+  $$QuitPlansTableProcessedTableManager get quitPlanId {
+    final $_column = $_itemColumn<String>('quit_plan_id')!;
+
+    final manager = $$QuitPlansTableTableManager(
+      $_db,
+      $_db.quitPlans,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_quitPlanIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TriggersTable _triggerIdTable(_$AppDatabase db) =>
+      db.triggers.createAlias('quit_plan_strategies__trigger_id__triggers__id');
+
+  $$TriggersTableProcessedTableManager? get triggerId {
+    final $_column = $_itemColumn<String>('trigger_id');
+    if ($_column == null) return null;
+    final manager = $$TriggersTableTableManager(
+      $_db,
+      $_db.triggers,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_triggerIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$QuitPlanStrategiesTableFilterComposer
+    extends Composer<_$AppDatabase, $QuitPlanStrategiesTable> {
+  $$QuitPlanStrategiesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get action => $composableBuilder(
+    column: $table.action,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$QuitPlansTableFilterComposer get quitPlanId {
+    final $$QuitPlansTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.quitPlanId,
+      referencedTable: $db.quitPlans,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuitPlansTableFilterComposer(
+            $db: $db,
+            $table: $db.quitPlans,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TriggersTableFilterComposer get triggerId {
+    final $$TriggersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.triggerId,
+      referencedTable: $db.triggers,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TriggersTableFilterComposer(
+            $db: $db,
+            $table: $db.triggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$QuitPlanStrategiesTableOrderingComposer
+    extends Composer<_$AppDatabase, $QuitPlanStrategiesTable> {
+  $$QuitPlanStrategiesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get action => $composableBuilder(
+    column: $table.action,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$QuitPlansTableOrderingComposer get quitPlanId {
+    final $$QuitPlansTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.quitPlanId,
+      referencedTable: $db.quitPlans,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuitPlansTableOrderingComposer(
+            $db: $db,
+            $table: $db.quitPlans,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TriggersTableOrderingComposer get triggerId {
+    final $$TriggersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.triggerId,
+      referencedTable: $db.triggers,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TriggersTableOrderingComposer(
+            $db: $db,
+            $table: $db.triggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$QuitPlanStrategiesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $QuitPlanStrategiesTable> {
+  $$QuitPlanStrategiesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get action =>
+      $composableBuilder(column: $table.action, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$QuitPlansTableAnnotationComposer get quitPlanId {
+    final $$QuitPlansTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.quitPlanId,
+      referencedTable: $db.quitPlans,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$QuitPlansTableAnnotationComposer(
+            $db: $db,
+            $table: $db.quitPlans,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TriggersTableAnnotationComposer get triggerId {
+    final $$TriggersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.triggerId,
+      referencedTable: $db.triggers,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TriggersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.triggers,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$QuitPlanStrategiesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $QuitPlanStrategiesTable,
+          QuitPlanStrategy,
+          $$QuitPlanStrategiesTableFilterComposer,
+          $$QuitPlanStrategiesTableOrderingComposer,
+          $$QuitPlanStrategiesTableAnnotationComposer,
+          $$QuitPlanStrategiesTableCreateCompanionBuilder,
+          $$QuitPlanStrategiesTableUpdateCompanionBuilder,
+          (QuitPlanStrategy, $$QuitPlanStrategiesTableReferences),
+          QuitPlanStrategy,
+          PrefetchHooks Function({bool quitPlanId, bool triggerId})
+        > {
+  $$QuitPlanStrategiesTableTableManager(
+    _$AppDatabase db,
+    $QuitPlanStrategiesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$QuitPlanStrategiesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$QuitPlanStrategiesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$QuitPlanStrategiesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> quitPlanId = const Value.absent(),
+                Value<String?> triggerId = const Value.absent(),
+                Value<String> action = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => QuitPlanStrategiesCompanion(
+                id: id,
+                quitPlanId: quitPlanId,
+                triggerId: triggerId,
+                action: action,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String quitPlanId,
+                Value<String?> triggerId = const Value.absent(),
+                required String action,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => QuitPlanStrategiesCompanion.insert(
+                id: id,
+                quitPlanId: quitPlanId,
+                triggerId: triggerId,
+                action: action,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$QuitPlanStrategiesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({quitPlanId = false, triggerId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (quitPlanId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.quitPlanId,
+                                referencedTable:
+                                    $$QuitPlanStrategiesTableReferences
+                                        ._quitPlanIdTable(db),
+                                referencedColumn:
+                                    $$QuitPlanStrategiesTableReferences
+                                        ._quitPlanIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (triggerId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.triggerId,
+                                referencedTable:
+                                    $$QuitPlanStrategiesTableReferences
+                                        ._triggerIdTable(db),
+                                referencedColumn:
+                                    $$QuitPlanStrategiesTableReferences
+                                        ._triggerIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$QuitPlanStrategiesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $QuitPlanStrategiesTable,
+      QuitPlanStrategy,
+      $$QuitPlanStrategiesTableFilterComposer,
+      $$QuitPlanStrategiesTableOrderingComposer,
+      $$QuitPlanStrategiesTableAnnotationComposer,
+      $$QuitPlanStrategiesTableCreateCompanionBuilder,
+      $$QuitPlanStrategiesTableUpdateCompanionBuilder,
+      (QuitPlanStrategy, $$QuitPlanStrategiesTableReferences),
+      QuitPlanStrategy,
+      PrefetchHooks Function({bool quitPlanId, bool triggerId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4490,4 +6466,8 @@ class $AppDatabaseManager {
       $$SmokingLogTriggersTableTableManager(_db, _db.smokingLogTriggers);
   $$CravingSessionsTableTableManager get cravingSessions =>
       $$CravingSessionsTableTableManager(_db, _db.cravingSessions);
+  $$QuitPlansTableTableManager get quitPlans =>
+      $$QuitPlansTableTableManager(_db, _db.quitPlans);
+  $$QuitPlanStrategiesTableTableManager get quitPlanStrategies =>
+      $$QuitPlanStrategiesTableTableManager(_db, _db.quitPlanStrategies);
 }

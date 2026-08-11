@@ -83,6 +83,39 @@ class CravingSessions extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+class QuitPlans extends Table {
+  TextColumn get id => text()();
+  DateTimeColumn get quitDate => dateTime()();
+  TextColumn get primaryMotivationId => text().nullable().references(
+    Motivations,
+    #id,
+    onDelete: KeyAction.setNull,
+  )();
+  TextColumn get supportPerson => text().nullable()();
+  TextColumn get status => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+class QuitPlanStrategies extends Table {
+  TextColumn get id => text()();
+  TextColumn get quitPlanId =>
+      text().references(QuitPlans, #id, onDelete: KeyAction.cascade)();
+  TextColumn get triggerId => text().nullable().references(
+    Triggers,
+    #id,
+    onDelete: KeyAction.setNull,
+  )();
+  TextColumn get action => text()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     AppMetadata,
@@ -92,6 +125,8 @@ class CravingSessions extends Table {
     Triggers,
     SmokingLogTriggers,
     CravingSessions,
+    QuitPlans,
+    QuitPlanStrategies,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -100,7 +135,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -117,6 +152,10 @@ class AppDatabase extends _$AppDatabase {
       }
       if (from < 4) {
         await migrator.createTable(cravingSessions);
+      }
+      if (from < 5) {
+        await migrator.createTable(quitPlans);
+        await migrator.createTable(quitPlanStrategies);
       }
     },
   );

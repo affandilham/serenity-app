@@ -12,12 +12,12 @@ Deliver quit plan & slip handling as a complete, testable vertical slice while p
 
 ## Scope
 
-- [ ] Quit plan editor
-- [ ] Quit date
-- [ ] Trigger-to-strategy mapping
-- [ ] Quit Day mode
-- [ ] Smoke-free streak
-- [ ] Slip handling without deleting lifetime progress
+- [x] Quit plan editor
+- [x] Quit date
+- [x] Trigger-to-strategy mapping
+- [x] Quit Day mode
+- [x] Smoke-free streak
+- [x] Slip handling without deleting lifetime progress
 
 ## UX Requirements
 
@@ -44,19 +44,38 @@ Deliver quit plan & slip handling as a complete, testable vertical slice while p
 
 ## Definition of Done
 
-- [ ] Every Scope item is implemented.
-- [ ] Relevant unit/repository/widget tests exist.
-- [ ] No regression in completed milestones.
-- [ ] `dart format .` completed.
-- [ ] `flutter analyze` passes with no unresolved issues.
-- [ ] `flutter test` passes.
-- [ ] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
+- [x] Every Scope item is implemented.
+- [x] Relevant unit/repository/widget tests exist.
+- [x] No regression in completed milestones.
+- [x] `dart format .` completed.
+- [x] `flutter analyze` passes with no unresolved issues.
+- [x] `flutter test` passes.
+- [x] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
 
 ## Completion Report
 
-When finished, report:
-1. Files created/changed.
-2. Architecture or schema decisions made.
-3. Tests added and commands run.
-4. Known limitations, if any.
-5. Whether the repository is ready for Milestone 06.
+Completed on 2026-08-11.
+
+1. Added an editable, locally persisted Quit Plan with a local-calendar quit
+   date, a link to an existing private motivation, an optional support person,
+   up to three trigger plans, and an optional general craving action.
+2. Added explicit `draft`, `active`, `paused`, and `completed` domain states.
+   A draft activates when its local quit date arrives; active plans can pause
+   and resume. The transition rules and smoke-free calculations are pure,
+   deterministic domain logic.
+3. Home switches to a focused Quit Day experience with the primary daily goal,
+   time since the last cigarette, passed cravings, the existing SOS action,
+   and a way to edit the plan. It deliberately leaves money and richer journey
+   metrics to Milestone 06.
+4. Smoking after an active quit date is still stored exclusively as a normal
+   smoking log. The user sees a calm slip message and can continue quitting or
+   adjust their plan. No smoking logs, craving sessions, longest periods, or
+   plan state are deleted or reset automatically.
+5. Schema version 5 adds `quit_plans` and normalized `quit_plan_strategies`.
+   Its migration preserves version-4 data and uses foreign keys to existing
+   motivations and triggers.
+6. Added domain, repository, controller, migration, widget, and regression
+   coverage; `dart format .`, `flutter analyze`, and `flutter test` pass (28
+   tests).
+
+The repository is ready for Milestone 06.

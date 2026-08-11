@@ -4,7 +4,7 @@
 
 ## Current Milestone
 
-**05 — Quit Plan & Slip Handling**
+**06 — Insights & Journey**
 
 ## Milestones
 
@@ -12,7 +12,7 @@
 - [x] 02 Onboarding & Profile
 - [x] 03 Smoking Log & Triggers
 - [x] 04 Craving SOS
-- [ ] 05 Quit Plan & Slip Handling
+- [x] 05 Quit Plan & Slip Handling
 - [ ] 06 Insights & Journey
 - [ ] 07 Notifications, Settings & Export
 - [ ] 08 Polish, Accessibility & Testing
@@ -58,6 +58,10 @@ lib/
         ├── data/
         ├── domain/
         └── presentation/
+    └── quit_plan/
+        ├── data/
+        ├── domain/
+        └── presentation/
 ```
 
 The root route is an onboarding gate: a fresh installation shows the five-step
@@ -87,6 +91,13 @@ Schema version 4 preserves all existing tables and creates `craving_sessions`.
 It stores the start/end timestamps, initial/final intensity, completion outcome,
 and an optional private note for every SOS session. A migration test verifies
 version-3 smoking-log data remains available after the new table is created.
+
+Schema version 5 preserves all existing tables and creates `quit_plans` and
+`quit_plan_strategies`. A plan stores its local calendar quit date, explicit
+lifecycle status, optional existing motivation link, support person, and audit
+timestamps. The strategy table maps plan-specific actions to optional existing
+triggers, so relational data is not encoded as comma-separated text. A
+migration test verifies version-4 smoking logs and craving sessions survive.
 
 ## Important Implementation Decisions
 
@@ -122,18 +133,32 @@ version-3 smoking-log data remains available after the new table is created.
   begins another persisted five-minute session. Choosing `smoked` completes the
   craving session then reuses the existing quick smoking-log sheet, preserving
   prior smoking history and avoiding duplicate logging logic.
+- Quit plans have explicit `draft`, `active`, `paused`, and `completed`
+  statuses. A draft activates when the user's local quit date arrives; the
+  supported user transitions are draft → active, active → paused, and paused →
+  active.
+- `QuitProgress` derives the current and longest smoke-free durations from the
+  plan's local start day and immutable smoking logs. The latest cigarette is
+  never duplicated into the profile or plan; it is calculated from smoking-log
+  data.
+- A post-quit smoking event is a derived slip, not destructive state. It is
+  recorded through the existing logging flow, keeps the plan active unless the
+  user changes it, and offers a calm choice to continue or adjust the plan.
+- Milestone 04 was re-audited before Quit Plan work. Its persisted five-minute
+  flow, all outcomes, controller restoration, migration coverage, and existing
+  regression tests satisfy its Definition of Done; no correction was needed.
 
 ## Known Issues
 
-No known issues within completed milestones. Quit planning, notifications, and
-later analytics remain intentionally deferred.
+No known issues within completed milestones. Richer insights and journey
+metrics, notifications, settings, and export remain intentionally deferred.
 
 ## Next Agent Instructions
 
 1. Read `docs/APP_SPEC.md`.
 2. Read this file.
-3. Read `docs/milestones/05_QUIT_PLAN.md` completely.
+3. Read `docs/milestones/06_INSIGHTS.md` completely.
 4. Inspect the Foundation, Onboarding, Smoking Log, and Craving implementations
    before editing.
-5. Work only on Milestone 05.
+5. Work only on Milestone 06.
 6. Run formatter, analyzer, and tests before marking anything complete.

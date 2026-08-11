@@ -8,6 +8,7 @@ import '../../../../core/widgets/app_buttons.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../smoking_log/presentation/widgets/quick_smoking_log_sheet.dart';
+import '../../../quit_plan/presentation/pages/quit_plan_editor_page.dart';
 import '../../domain/entities/craving_session.dart';
 import '../../domain/entities/craving_session_progress.dart';
 import '../controllers/craving_providers.dart';
@@ -145,13 +146,30 @@ class _CravingStartViewState extends ConsumerState<_CravingStartView> {
     );
   }
 
-  Future<void> _openSmokingLog() {
-    return showModalBottomSheet<void>(
+  Future<void> _openSmokingLog() async {
+    final result = await showModalBottomSheet<QuickSmokingLogResult>(
       context: context,
       isScrollControlled: true,
       builder: (_) =>
           QuickSmokingLogSheet(initialCravingLevel: _initialIntensity),
     );
+    if (!mounted || result?.isSlip != true) {
+      return;
+    }
+    await _showSlipSupport();
+  }
+
+  Future<void> _showSlipSupport() async {
+    final resolution = await showModalBottomSheet<SlipResolution>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => const SlipSupportSheet(),
+    );
+    if (mounted && resolution == SlipResolution.adjustPlan) {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (_) => const QuitPlanEditorPage()),
+      );
+    }
   }
 }
 
@@ -323,7 +341,7 @@ class _ActiveCravingSessionState extends ConsumerState<_ActiveCravingSession>
       return;
     }
     if (outcome == CravingOutcome.smoked) {
-      await showModalBottomSheet<void>(
+      final result = await showModalBottomSheet<QuickSmokingLogResult>(
         context: context,
         isScrollControlled: true,
         builder: (_) => QuickSmokingLogSheet(
@@ -331,6 +349,9 @@ class _ActiveCravingSessionState extends ConsumerState<_ActiveCravingSession>
               finalIntensity ?? widget.session.initialIntensity,
         ),
       );
+      if (mounted && result?.isSlip == true) {
+        await _showSlipSupport();
+      }
       if (mounted) {
         Navigator.of(context).pop();
       }
@@ -367,6 +388,19 @@ class _ActiveCravingSessionState extends ConsumerState<_ActiveCravingSession>
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Kita tambah 5 menit lagi.')));
+  }
+
+  Future<void> _showSlipSupport() async {
+    final resolution = await showModalBottomSheet<SlipResolution>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => const SlipSupportSheet(),
+    );
+    if (mounted && resolution == SlipResolution.adjustPlan) {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (_) => const QuitPlanEditorPage()),
+      );
+    }
   }
 
   String _formatDuration(Duration duration) {
