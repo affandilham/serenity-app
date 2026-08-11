@@ -5,6 +5,7 @@ import '../../../../app/theme/app_tokens.dart';
 import '../../../../core/widgets/app_buttons.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_scaffold.dart';
+import '../../../craving/presentation/pages/craving_sos_page.dart';
 import '../../domain/entities/smoking_log.dart';
 import '../controllers/smoking_log_providers.dart';
 import '../widgets/quick_smoking_log_sheet.dart';
@@ -44,6 +45,15 @@ class HomePage extends StatelessWidget {
                       context: context,
                       isScrollControlled: true,
                       builder: (_) => const QuickSmokingLogSheet(),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  SecondaryButton(
+                    label: 'Saya lagi ngidam',
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const CravingSosPage(),
+                      ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xxl),

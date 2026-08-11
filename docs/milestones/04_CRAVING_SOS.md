@@ -12,11 +12,11 @@ Deliver craving sos as a complete, testable vertical slice while preserving the 
 
 ## Scope
 
-- [ ] 5-minute SOS flow
-- [ ] Craving intensity before/after
-- [ ] Breathing, water, movement, distraction steps
-- [ ] Craving session persistence
-- [ ] passed/delayed/smoked/abandoned outcomes
+- [x] 5-minute SOS flow
+- [x] Craving intensity before/after
+- [x] Breathing, water, movement, distraction steps
+- [x] Craving session persistence
+- [x] passed/delayed/smoked/abandoned outcomes
 
 ## UX Requirements
 
@@ -43,19 +43,38 @@ Deliver craving sos as a complete, testable vertical slice while preserving the 
 
 ## Definition of Done
 
-- [ ] Every Scope item is implemented.
-- [ ] Relevant unit/repository/widget tests exist.
-- [ ] No regression in completed milestones.
-- [ ] `dart format .` completed.
-- [ ] `flutter analyze` passes with no unresolved issues.
-- [ ] `flutter test` passes.
-- [ ] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
+- [x] Every Scope item is implemented.
+- [x] Relevant unit/repository/widget tests exist.
+- [x] No regression in completed milestones.
+- [x] `dart format .` completed.
+- [x] `flutter analyze` passes with no unresolved issues.
+- [x] `flutter test` passes.
+- [x] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
 
 ## Completion Report
 
-When finished, report:
-1. Files created/changed.
-2. Architecture or schema decisions made.
-3. Tests added and commands run.
-4. Known limitations, if any.
-5. Whether the repository is ready for Milestone 05.
+Completed on 2026-08-11.
+
+1. Added a one-tap Home entry point and a calm, timestamp-driven five-minute
+   SOS experience. It progresses through Bernapas, Minum, Bergerak, Alihkan,
+   and Cek lagi, and only runs its lightweight one-second display ticker while
+   the active page is visible.
+2. Added a feature-first craving repository, immutable domain models, a pure
+   timer-progress calculation, and a narrow Riverpod controller that resumes
+   any unfinished local session after ordinary rebuilds or app lifecycle
+   changes. The timer is always derived from `started_at`, so background time
+   does not drift.
+3. Added schema version 4 with `craving_sessions`. It retains every previous
+   table and record, stores start/end timestamps, initial/final intensity,
+   outcome, and an optional note. A version-3 migration test verifies smoking
+   data survives the new table.
+4. The final check supports passed, delayed, smoked, and abandoned without
+   shame-based copy. Delaying records the completed session and immediately
+   starts another persisted five-minute session. Choosing smoked hands off to
+   the existing quick smoking-log sheet rather than duplicating logging logic.
+5. Added domain, repository, controller, migration, and widget tests. They use
+   deterministic time and cover all outcomes, persistence, timer clamping,
+   continuation, the smoked-history invariant, and the passed widget flow.
+6. `dart format .`, `flutter analyze`, and `flutter test` pass. There are no
+   known limitations within this milestone; the repository is ready for
+   Milestone 05.

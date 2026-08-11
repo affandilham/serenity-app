@@ -7,7 +7,9 @@ import '../../domain/entities/smoking_log.dart';
 import '../controllers/smoking_log_providers.dart';
 
 class QuickSmokingLogSheet extends ConsumerStatefulWidget {
-  const QuickSmokingLogSheet({super.key});
+  const QuickSmokingLogSheet({super.key, this.initialCravingLevel = 3});
+
+  final int initialCravingLevel;
 
   @override
   ConsumerState<QuickSmokingLogSheet> createState() =>
@@ -18,12 +20,13 @@ class _QuickSmokingLogSheetState extends ConsumerState<QuickSmokingLogSheet> {
   final _selectedTriggerIds = <String>{};
   final _noteController = TextEditingController();
   late final DateTime _openedAt;
-  int _cravingLevel = 3;
+  late int _cravingLevel;
 
   @override
   void initState() {
     super.initState();
     _openedAt = ref.read(smokingLogClockProvider)();
+    _cravingLevel = widget.initialCravingLevel;
   }
 
   @override

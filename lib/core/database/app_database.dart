@@ -70,6 +70,19 @@ class SmokingLogTriggers extends Table {
   Set<Column<Object>> get primaryKey => {smokingLogId, triggerId};
 }
 
+class CravingSessions extends Table {
+  TextColumn get id => text()();
+  DateTimeColumn get startedAt => dateTime()();
+  DateTimeColumn get endedAt => dateTime().nullable()();
+  IntColumn get initialIntensity => integer()();
+  IntColumn get finalIntensity => integer().nullable()();
+  TextColumn get outcome => text().nullable()();
+  TextColumn get note => text().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     AppMetadata,
@@ -78,6 +91,7 @@ class SmokingLogTriggers extends Table {
     SmokingLogs,
     Triggers,
     SmokingLogTriggers,
+    CravingSessions,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -86,7 +100,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -100,6 +114,9 @@ class AppDatabase extends _$AppDatabase {
         await migrator.createTable(smokingLogs);
         await migrator.createTable(triggers);
         await migrator.createTable(smokingLogTriggers);
+      }
+      if (from < 4) {
+        await migrator.createTable(cravingSessions);
       }
     },
   );

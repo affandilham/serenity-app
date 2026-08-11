@@ -2109,6 +2109,482 @@ class SmokingLogTriggersCompanion extends UpdateCompanion<SmokingLogTrigger> {
   }
 }
 
+class $CravingSessionsTable extends CravingSessions
+    with TableInfo<$CravingSessionsTable, CravingSession> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CravingSessionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _startedAtMeta = const VerificationMeta(
+    'startedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> startedAt = GeneratedColumn<DateTime>(
+    'started_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endedAtMeta = const VerificationMeta(
+    'endedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> endedAt = GeneratedColumn<DateTime>(
+    'ended_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _initialIntensityMeta = const VerificationMeta(
+    'initialIntensity',
+  );
+  @override
+  late final GeneratedColumn<int> initialIntensity = GeneratedColumn<int>(
+    'initial_intensity',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _finalIntensityMeta = const VerificationMeta(
+    'finalIntensity',
+  );
+  @override
+  late final GeneratedColumn<int> finalIntensity = GeneratedColumn<int>(
+    'final_intensity',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _outcomeMeta = const VerificationMeta(
+    'outcome',
+  );
+  @override
+  late final GeneratedColumn<String> outcome = GeneratedColumn<String>(
+    'outcome',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    startedAt,
+    endedAt,
+    initialIntensity,
+    finalIntensity,
+    outcome,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'craving_sessions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CravingSession> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('started_at')) {
+      context.handle(
+        _startedAtMeta,
+        startedAt.isAcceptableOrUnknown(data['started_at']!, _startedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startedAtMeta);
+    }
+    if (data.containsKey('ended_at')) {
+      context.handle(
+        _endedAtMeta,
+        endedAt.isAcceptableOrUnknown(data['ended_at']!, _endedAtMeta),
+      );
+    }
+    if (data.containsKey('initial_intensity')) {
+      context.handle(
+        _initialIntensityMeta,
+        initialIntensity.isAcceptableOrUnknown(
+          data['initial_intensity']!,
+          _initialIntensityMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_initialIntensityMeta);
+    }
+    if (data.containsKey('final_intensity')) {
+      context.handle(
+        _finalIntensityMeta,
+        finalIntensity.isAcceptableOrUnknown(
+          data['final_intensity']!,
+          _finalIntensityMeta,
+        ),
+      );
+    }
+    if (data.containsKey('outcome')) {
+      context.handle(
+        _outcomeMeta,
+        outcome.isAcceptableOrUnknown(data['outcome']!, _outcomeMeta),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CravingSession map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CravingSession(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      startedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}started_at'],
+      )!,
+      endedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}ended_at'],
+      ),
+      initialIntensity: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}initial_intensity'],
+      )!,
+      finalIntensity: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}final_intensity'],
+      ),
+      outcome: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}outcome'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $CravingSessionsTable createAlias(String alias) {
+    return $CravingSessionsTable(attachedDatabase, alias);
+  }
+}
+
+class CravingSession extends DataClass implements Insertable<CravingSession> {
+  final String id;
+  final DateTime startedAt;
+  final DateTime? endedAt;
+  final int initialIntensity;
+  final int? finalIntensity;
+  final String? outcome;
+  final String? note;
+  const CravingSession({
+    required this.id,
+    required this.startedAt,
+    this.endedAt,
+    required this.initialIntensity,
+    this.finalIntensity,
+    this.outcome,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['started_at'] = Variable<DateTime>(startedAt);
+    if (!nullToAbsent || endedAt != null) {
+      map['ended_at'] = Variable<DateTime>(endedAt);
+    }
+    map['initial_intensity'] = Variable<int>(initialIntensity);
+    if (!nullToAbsent || finalIntensity != null) {
+      map['final_intensity'] = Variable<int>(finalIntensity);
+    }
+    if (!nullToAbsent || outcome != null) {
+      map['outcome'] = Variable<String>(outcome);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  CravingSessionsCompanion toCompanion(bool nullToAbsent) {
+    return CravingSessionsCompanion(
+      id: Value(id),
+      startedAt: Value(startedAt),
+      endedAt: endedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endedAt),
+      initialIntensity: Value(initialIntensity),
+      finalIntensity: finalIntensity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(finalIntensity),
+      outcome: outcome == null && nullToAbsent
+          ? const Value.absent()
+          : Value(outcome),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory CravingSession.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CravingSession(
+      id: serializer.fromJson<String>(json['id']),
+      startedAt: serializer.fromJson<DateTime>(json['startedAt']),
+      endedAt: serializer.fromJson<DateTime?>(json['endedAt']),
+      initialIntensity: serializer.fromJson<int>(json['initialIntensity']),
+      finalIntensity: serializer.fromJson<int?>(json['finalIntensity']),
+      outcome: serializer.fromJson<String?>(json['outcome']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'startedAt': serializer.toJson<DateTime>(startedAt),
+      'endedAt': serializer.toJson<DateTime?>(endedAt),
+      'initialIntensity': serializer.toJson<int>(initialIntensity),
+      'finalIntensity': serializer.toJson<int?>(finalIntensity),
+      'outcome': serializer.toJson<String?>(outcome),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  CravingSession copyWith({
+    String? id,
+    DateTime? startedAt,
+    Value<DateTime?> endedAt = const Value.absent(),
+    int? initialIntensity,
+    Value<int?> finalIntensity = const Value.absent(),
+    Value<String?> outcome = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+  }) => CravingSession(
+    id: id ?? this.id,
+    startedAt: startedAt ?? this.startedAt,
+    endedAt: endedAt.present ? endedAt.value : this.endedAt,
+    initialIntensity: initialIntensity ?? this.initialIntensity,
+    finalIntensity: finalIntensity.present
+        ? finalIntensity.value
+        : this.finalIntensity,
+    outcome: outcome.present ? outcome.value : this.outcome,
+    note: note.present ? note.value : this.note,
+  );
+  CravingSession copyWithCompanion(CravingSessionsCompanion data) {
+    return CravingSession(
+      id: data.id.present ? data.id.value : this.id,
+      startedAt: data.startedAt.present ? data.startedAt.value : this.startedAt,
+      endedAt: data.endedAt.present ? data.endedAt.value : this.endedAt,
+      initialIntensity: data.initialIntensity.present
+          ? data.initialIntensity.value
+          : this.initialIntensity,
+      finalIntensity: data.finalIntensity.present
+          ? data.finalIntensity.value
+          : this.finalIntensity,
+      outcome: data.outcome.present ? data.outcome.value : this.outcome,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CravingSession(')
+          ..write('id: $id, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt, ')
+          ..write('initialIntensity: $initialIntensity, ')
+          ..write('finalIntensity: $finalIntensity, ')
+          ..write('outcome: $outcome, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    startedAt,
+    endedAt,
+    initialIntensity,
+    finalIntensity,
+    outcome,
+    note,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CravingSession &&
+          other.id == this.id &&
+          other.startedAt == this.startedAt &&
+          other.endedAt == this.endedAt &&
+          other.initialIntensity == this.initialIntensity &&
+          other.finalIntensity == this.finalIntensity &&
+          other.outcome == this.outcome &&
+          other.note == this.note);
+}
+
+class CravingSessionsCompanion extends UpdateCompanion<CravingSession> {
+  final Value<String> id;
+  final Value<DateTime> startedAt;
+  final Value<DateTime?> endedAt;
+  final Value<int> initialIntensity;
+  final Value<int?> finalIntensity;
+  final Value<String?> outcome;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const CravingSessionsCompanion({
+    this.id = const Value.absent(),
+    this.startedAt = const Value.absent(),
+    this.endedAt = const Value.absent(),
+    this.initialIntensity = const Value.absent(),
+    this.finalIntensity = const Value.absent(),
+    this.outcome = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CravingSessionsCompanion.insert({
+    required String id,
+    required DateTime startedAt,
+    this.endedAt = const Value.absent(),
+    required int initialIntensity,
+    this.finalIntensity = const Value.absent(),
+    this.outcome = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       startedAt = Value(startedAt),
+       initialIntensity = Value(initialIntensity);
+  static Insertable<CravingSession> custom({
+    Expression<String>? id,
+    Expression<DateTime>? startedAt,
+    Expression<DateTime>? endedAt,
+    Expression<int>? initialIntensity,
+    Expression<int>? finalIntensity,
+    Expression<String>? outcome,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (startedAt != null) 'started_at': startedAt,
+      if (endedAt != null) 'ended_at': endedAt,
+      if (initialIntensity != null) 'initial_intensity': initialIntensity,
+      if (finalIntensity != null) 'final_intensity': finalIntensity,
+      if (outcome != null) 'outcome': outcome,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CravingSessionsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? startedAt,
+    Value<DateTime?>? endedAt,
+    Value<int>? initialIntensity,
+    Value<int?>? finalIntensity,
+    Value<String?>? outcome,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return CravingSessionsCompanion(
+      id: id ?? this.id,
+      startedAt: startedAt ?? this.startedAt,
+      endedAt: endedAt ?? this.endedAt,
+      initialIntensity: initialIntensity ?? this.initialIntensity,
+      finalIntensity: finalIntensity ?? this.finalIntensity,
+      outcome: outcome ?? this.outcome,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (startedAt.present) {
+      map['started_at'] = Variable<DateTime>(startedAt.value);
+    }
+    if (endedAt.present) {
+      map['ended_at'] = Variable<DateTime>(endedAt.value);
+    }
+    if (initialIntensity.present) {
+      map['initial_intensity'] = Variable<int>(initialIntensity.value);
+    }
+    if (finalIntensity.present) {
+      map['final_intensity'] = Variable<int>(finalIntensity.value);
+    }
+    if (outcome.present) {
+      map['outcome'] = Variable<String>(outcome.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CravingSessionsCompanion(')
+          ..write('id: $id, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt, ')
+          ..write('initialIntensity: $initialIntensity, ')
+          ..write('finalIntensity: $finalIntensity, ')
+          ..write('outcome: $outcome, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2119,6 +2595,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $TriggersTable triggers = $TriggersTable(this);
   late final $SmokingLogTriggersTable smokingLogTriggers =
       $SmokingLogTriggersTable(this);
+  late final $CravingSessionsTable cravingSessions = $CravingSessionsTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2130,6 +2609,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     smokingLogs,
     triggers,
     smokingLogTriggers,
+    cravingSessions,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -3744,6 +4224,254 @@ typedef $$SmokingLogTriggersTableProcessedTableManager =
       SmokingLogTrigger,
       PrefetchHooks Function({bool smokingLogId, bool triggerId})
     >;
+typedef $$CravingSessionsTableCreateCompanionBuilder =
+    CravingSessionsCompanion Function({
+      required String id,
+      required DateTime startedAt,
+      Value<DateTime?> endedAt,
+      required int initialIntensity,
+      Value<int?> finalIntensity,
+      Value<String?> outcome,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+typedef $$CravingSessionsTableUpdateCompanionBuilder =
+    CravingSessionsCompanion Function({
+      Value<String> id,
+      Value<DateTime> startedAt,
+      Value<DateTime?> endedAt,
+      Value<int> initialIntensity,
+      Value<int?> finalIntensity,
+      Value<String?> outcome,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+
+class $$CravingSessionsTableFilterComposer
+    extends Composer<_$AppDatabase, $CravingSessionsTable> {
+  $$CravingSessionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get endedAt => $composableBuilder(
+    column: $table.endedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get initialIntensity => $composableBuilder(
+    column: $table.initialIntensity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get finalIntensity => $composableBuilder(
+    column: $table.finalIntensity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get outcome => $composableBuilder(
+    column: $table.outcome,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CravingSessionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CravingSessionsTable> {
+  $$CravingSessionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get endedAt => $composableBuilder(
+    column: $table.endedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get initialIntensity => $composableBuilder(
+    column: $table.initialIntensity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get finalIntensity => $composableBuilder(
+    column: $table.finalIntensity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get outcome => $composableBuilder(
+    column: $table.outcome,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CravingSessionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CravingSessionsTable> {
+  $$CravingSessionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startedAt =>
+      $composableBuilder(column: $table.startedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endedAt =>
+      $composableBuilder(column: $table.endedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get initialIntensity => $composableBuilder(
+    column: $table.initialIntensity,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get finalIntensity => $composableBuilder(
+    column: $table.finalIntensity,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get outcome =>
+      $composableBuilder(column: $table.outcome, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$CravingSessionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CravingSessionsTable,
+          CravingSession,
+          $$CravingSessionsTableFilterComposer,
+          $$CravingSessionsTableOrderingComposer,
+          $$CravingSessionsTableAnnotationComposer,
+          $$CravingSessionsTableCreateCompanionBuilder,
+          $$CravingSessionsTableUpdateCompanionBuilder,
+          (
+            CravingSession,
+            BaseReferences<
+              _$AppDatabase,
+              $CravingSessionsTable,
+              CravingSession
+            >,
+          ),
+          CravingSession,
+          PrefetchHooks Function()
+        > {
+  $$CravingSessionsTableTableManager(
+    _$AppDatabase db,
+    $CravingSessionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CravingSessionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CravingSessionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CravingSessionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> startedAt = const Value.absent(),
+                Value<DateTime?> endedAt = const Value.absent(),
+                Value<int> initialIntensity = const Value.absent(),
+                Value<int?> finalIntensity = const Value.absent(),
+                Value<String?> outcome = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CravingSessionsCompanion(
+                id: id,
+                startedAt: startedAt,
+                endedAt: endedAt,
+                initialIntensity: initialIntensity,
+                finalIntensity: finalIntensity,
+                outcome: outcome,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime startedAt,
+                Value<DateTime?> endedAt = const Value.absent(),
+                required int initialIntensity,
+                Value<int?> finalIntensity = const Value.absent(),
+                Value<String?> outcome = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CravingSessionsCompanion.insert(
+                id: id,
+                startedAt: startedAt,
+                endedAt: endedAt,
+                initialIntensity: initialIntensity,
+                finalIntensity: finalIntensity,
+                outcome: outcome,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CravingSessionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CravingSessionsTable,
+      CravingSession,
+      $$CravingSessionsTableFilterComposer,
+      $$CravingSessionsTableOrderingComposer,
+      $$CravingSessionsTableAnnotationComposer,
+      $$CravingSessionsTableCreateCompanionBuilder,
+      $$CravingSessionsTableUpdateCompanionBuilder,
+      (
+        CravingSession,
+        BaseReferences<_$AppDatabase, $CravingSessionsTable, CravingSession>,
+      ),
+      CravingSession,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3760,4 +4488,6 @@ class $AppDatabaseManager {
       $$TriggersTableTableManager(_db, _db.triggers);
   $$SmokingLogTriggersTableTableManager get smokingLogTriggers =>
       $$SmokingLogTriggersTableTableManager(_db, _db.smokingLogTriggers);
+  $$CravingSessionsTableTableManager get cravingSessions =>
+      $$CravingSessionsTableTableManager(_db, _db.cravingSessions);
 }
