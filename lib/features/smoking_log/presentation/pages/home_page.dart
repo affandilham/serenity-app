@@ -11,6 +11,7 @@ import '../../../insights/presentation/pages/insights_page.dart';
 import '../../../quit_plan/domain/entities/quit_plan.dart';
 import '../../../quit_plan/presentation/controllers/quit_plan_providers.dart';
 import '../../../quit_plan/presentation/pages/quit_plan_editor_page.dart';
+import '../../../settings/presentation/pages/settings_page.dart';
 import '../../domain/entities/smoking_log.dart';
 import '../controllers/smoking_log_providers.dart';
 import '../widgets/quick_smoking_log_sheet.dart';
@@ -83,6 +84,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                     onPressed: _openInsights,
                     child: const Text('Lihat insight'),
                   ),
+                  TextButton(
+                    onPressed: _openSettings,
+                    child: const Text('Pengaturan'),
+                  ),
                   const SizedBox(height: AppSpacing.xxl),
                   Text('Pola hari ini', style: textTheme.titleLarge),
                   const SizedBox(height: AppSpacing.md),
@@ -137,6 +142,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   Future<void> _openInsights() => Navigator.of(
     context,
   ).push(MaterialPageRoute<void>(builder: (_) => const InsightsPage()));
+
+  Future<void> _openSettings() => Navigator.of(
+    context,
+  ).push(MaterialPageRoute<void>(builder: (_) => const SettingsPage()));
 }
 
 class _QuitDayHome extends ConsumerWidget {
@@ -255,6 +264,14 @@ class _QuitDayHome extends ConsumerWidget {
                     ),
                   ),
                   child: const Text('Lihat atau ubah rencana'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const SettingsPage(),
+                    ),
+                  ),
+                  child: const Text('Pengaturan'),
                 ),
               ],
             ),

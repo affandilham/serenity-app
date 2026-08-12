@@ -9,4 +9,10 @@ abstract interface class ProfileRepository {
   Future<List<PersonalMotivation>> getMotivations();
 
   Future<void> saveOnboarding(OnboardingDraft draft);
+
+  Future<void> updatePattern({
+    required int baselineCigarettesPerDay,
+    required int? cigarettesPerPack,
+    required int? packPrice,
+  });
 }

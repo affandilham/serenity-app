@@ -159,4 +159,16 @@ class AppDatabase extends _$AppDatabase {
       }
     },
   );
+
+  Future<void> deleteAllPersonalData() => transaction(() async {
+    await delete(quitPlanStrategies).go();
+    await delete(smokingLogTriggers).go();
+    await delete(quitPlans).go();
+    await delete(cravingSessions).go();
+    await delete(smokingLogs).go();
+    await delete(motivations).go();
+    await delete(triggers).go();
+    await delete(userProfiles).go();
+    await delete(appMetadata).go();
+  });
 }

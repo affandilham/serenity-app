@@ -4,7 +4,7 @@
 
 ## Current Milestone
 
-**07 — Notifications, Settings & Export**
+**08 — Polish, Accessibility & Testing**
 
 ## Milestones
 
@@ -14,7 +14,7 @@
 - [x] 04 Craving SOS
 - [x] 05 Quit Plan & Slip Handling
 - [x] 06 Insights & Journey
-- [ ] 07 Notifications, Settings & Export
+- [x] 07 Notifications, Settings & Export
 - [ ] 08 Polish, Accessibility & Testing
 
 ## Stable Product Decisions
@@ -65,6 +65,10 @@ lib/
     └── insights/
         ├── domain/
         └── presentation/
+    └── settings/
+        ├── data/
+        ├── domain/
+        └── presentation/
 ```
 
 The root route is an onboarding gate: a fresh installation shows the five-step
@@ -101,6 +105,9 @@ lifecycle status, optional existing motivation link, support person, and audit
 timestamps. The strategy table maps plan-specific actions to optional existing
 triggers, so relational data is not encoded as comma-separated text. A
 migration test verifies version-4 smoking logs and craving sessions survive.
+
+Milestone 07 adds no schema migration. Its small, non-behavioral preferences
+use the existing `app_metadata` table and are removed by Delete All Data.
 
 ## Important Implementation Decisions
 
@@ -164,18 +171,42 @@ migration test verifies version-4 smoking logs and craving sessions survive.
   a full baseline benefit for a partial current day. Slip logs reset only the
   current smoke-free duration through the established QuitProgress semantics;
   avoided cigarettes and estimated savings remain lifetime-derived progress.
+- Notification preferences default off and are stored in `app_metadata`.
+  `NotificationController` requests platform permission only after the user
+  explicitly enables a reminder; a denial leaves the preference off and the app
+  usable. `FlutterNotificationService` owns platform setup, resolves the
+  device's IANA timezone, and schedules local wall-clock times. Daily check-in
+  and quit-day reminders use stable IDs 7101 and 7102; rescheduling replaces
+  an old ID and reset cancels all Serenity notifications. Android uses inexact
+  idle-safe scheduling, avoiding an exact-alarm permission prompt.
+- Theme preference (`system`, `light`, `dark`) is persisted in `app_metadata`
+  and drives `MaterialApp` reactively. Profile baseline, cigarettes-per-pack,
+  and pack-price edits reuse the onboarding repository, allowing Insights to
+  update without altering historical logs.
+- JSON export version 1 is generated outside widgets and contains only
+  user-owned Serenity data: profile, motivations, triggers, smoking logs and
+  trigger links, craving sessions, quit plans and strategies, and settings. A
+  device share sheet is shown only after an explicit export action.
+- Delete All Data is centralized in `AppDatabase.deleteAllPersonalData` and
+  `ResetService`: it cancels notifications, clears all Serenity behavioral data
+  and settings in one local transaction, and returns the root onboarding gate
+  to fresh state. No unrelated device data is touched.
+- The rename audit found no old user-facing product name. The local `serenity`
+  database file name, `serenity_app` package, and current Android/iOS IDs are
+  intentionally retained technical names to protect existing installations and
+  data.
 
 ## Known Issues
 
-No known issues within completed milestones. Notifications, settings, and
-export remain intentionally deferred to Milestone 07.
+No known issues within completed milestones. Milestone 08 remains for final
+polish, accessibility, and broader test coverage.
 
 ## Next Agent Instructions
 
 1. Read `docs/APP_SPEC.md`.
 2. Read this file.
-3. Read `docs/milestones/07_NOTIFICATIONS_SETTINGS.md` completely.
-4. Inspect the existing notification, profile, and database implementations
+3. Read `docs/milestones/08_POLISH_TESTING.md` completely.
+4. Inspect the completed feature implementations and current test suite
    before editing.
-5. Work only on Milestone 07.
+5. Work only on Milestone 08.
 6. Run formatter, analyzer, and tests before marking anything complete.

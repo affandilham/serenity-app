@@ -72,6 +72,13 @@ class _FakeProfileRepository implements ProfileRepository {
   Future<void> saveOnboarding(OnboardingDraft draft) async {}
 
   @override
+  Future<void> updatePattern({
+    required int baselineCigarettesPerDay,
+    required int? cigarettesPerPack,
+    required int? packPrice,
+  }) async {}
+
+  @override
   Stream<UserProfile?> watchProfile() => Stream.value(null);
 }
 

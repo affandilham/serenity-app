@@ -12,13 +12,13 @@ Deliver notifications, settings & export as a complete, testable vertical slice 
 
 ## Scope
 
-- [ ] Opt-in local notifications
-- [ ] Daily check-in
-- [ ] Quit date reminder
-- [ ] Settings
-- [ ] Theme preference
-- [ ] JSON export
-- [ ] Delete all data
+- [x] Opt-in local notifications
+- [x] Daily check-in
+- [x] Quit date reminder
+- [x] Settings
+- [x] Theme preference
+- [x] JSON export
+- [x] Delete all data
 
 ## UX Requirements
 
@@ -45,13 +45,13 @@ Deliver notifications, settings & export as a complete, testable vertical slice 
 
 ## Definition of Done
 
-- [ ] Every Scope item is implemented.
-- [ ] Relevant unit/repository/widget tests exist.
-- [ ] No regression in completed milestones.
-- [ ] `dart format .` completed.
-- [ ] `flutter analyze` passes with no unresolved issues.
-- [ ] `flutter test` passes.
-- [ ] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
+- [x] Every Scope item is implemented.
+- [x] Relevant unit/repository/widget tests exist.
+- [x] No regression in completed milestones.
+- [x] `dart format .` completed.
+- [x] `flutter analyze` passes with no unresolved issues.
+- [x] `flutter test` passes.
+- [x] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
 
 ## Completion Report
 
@@ -61,3 +61,34 @@ When finished, report:
 3. Tests added and commands run.
 4. Known limitations, if any.
 5. Whether the repository is ready for Milestone 08.
+
+## Completion Report
+
+Completed on 2026-08-12.
+
+1. Added persisted, opt-in reminder preferences backed by the existing
+   `app_metadata` table. Notifications default off. Permission is requested
+   only after the user enables a reminder. Daily check-ins use stable ID 7101;
+   quit-day reminders use stable ID 7102 and derive their date from the
+   existing Quit Plan. Scheduling the same category replaces its old schedule.
+2. Local platform scheduling is isolated in `FlutterNotificationService`. It
+   resolves the device's IANA timezone before scheduling wall-clock times and
+   uses inexact idle-safe Android scheduling, so no exact-alarm permission is
+   requested. There are no remote notifications, trackers, or network calls.
+3. Added Settings with persisted System/Light/Dark theme selection, editable
+   baseline/pack/price values, notification controls, Quit Plan entry, JSON
+   export via the device share sheet, deliberate delete-all confirmation, and
+   the required About disclaimer. Profile changes preserve historical logs and
+   existing Insights recalculate reactively.
+4. JSON export version 1 contains profile, motivations, triggers, smoking logs
+   and trigger IDs, craving sessions, quit plans and strategies, and Serenity
+   settings. Delete all cancels Serenity notifications, clears all personal
+   tables and preferences, then returns the root onboarding gate to fresh state.
+5. Added repository/service/controller coverage for defaults, persistence,
+   permission denial, stable notification categories, scheduling, JSON export
+   relationships/empty state, and full reset. `dart format .`, `flutter
+   analyze`, and the complete test suite pass.
+6. The rename audit found no previous user-facing product name. The local
+   `serenity` database name, `serenity_app` package name, and Android/iOS
+   identifiers remain intentionally, to avoid breaking existing installations
+   or local data. The repository is ready for Milestone 08.

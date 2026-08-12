@@ -80,6 +80,48 @@ class DriftProfileRepository implements ProfileRepository {
     });
   }
 
+  @override
+  Future<void> updatePattern({
+    required int baselineCigarettesPerDay,
+    required int? cigarettesPerPack,
+    required int? packPrice,
+  }) async {
+    if (baselineCigarettesPerDay <= 0) {
+      throw ArgumentError.value(
+        baselineCigarettesPerDay,
+        'baselineCigarettesPerDay',
+        'The baseline must be greater than zero.',
+      );
+    }
+    if (cigarettesPerPack != null && cigarettesPerPack <= 0) {
+      throw ArgumentError.value(
+        cigarettesPerPack,
+        'cigarettesPerPack',
+        'Cigarettes per pack must be greater than zero.',
+      );
+    }
+    if (packPrice != null && packPrice < 0) {
+      throw ArgumentError.value(
+        packPrice,
+        'packPrice',
+        'The pack price cannot be negative.',
+      );
+    }
+    final updated =
+        await (_database.update(
+          _database.userProfiles,
+        )..where((table) => table.id.equals('primary'))).write(
+          db.UserProfilesCompanion(
+            baselineCigarettesPerDay: Value(baselineCigarettesPerDay),
+            cigarettesPerPack: Value(cigarettesPerPack),
+            packPrice: Value(packPrice),
+          ),
+        );
+    if (updated == 0) {
+      throw StateError('The profile could not be found.');
+    }
+  }
+
   UserProfile? _profileFromRow(db.UserProfile? row) {
     if (row == null) {
       return null;
