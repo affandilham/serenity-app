@@ -35,13 +35,16 @@ final smokingLogControllerProvider =
 
 class SmokingLogController extends AsyncNotifier<void> {
   @override
-  Future<void> build() async {}
+  void build() {}
 
   Future<void> addQuickLog({
     required Set<String> triggerIds,
     int? cravingLevel,
     String? note,
   }) async {
+    if (state.isLoading) {
+      return;
+    }
     final now = ref.read(smokingLogClockProvider)();
     state = const AsyncLoading();
     state = await AsyncValue.guard(

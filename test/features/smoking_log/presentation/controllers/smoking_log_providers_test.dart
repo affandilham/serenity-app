@@ -53,4 +53,29 @@ void main() {
       );
     },
   );
+
+  test(
+    'quick-log controller ignores a repeated save while the first is active',
+    () async {
+      final database = AppDatabase.forTesting(NativeDatabase.memory());
+      final container = ProviderContainer(
+        overrides: [
+          appDatabaseProvider.overrideWithValue(database),
+          smokingLogClockProvider.overrideWithValue(
+            () => DateTime(2026, 8, 11, 8, 12),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+      addTearDown(database.close);
+
+      final controller = container.read(smokingLogControllerProvider.notifier);
+      await Future.wait([
+        controller.addQuickLog(triggerIds: const {}, cravingLevel: 3),
+        controller.addQuickLog(triggerIds: const {}, cravingLevel: 3),
+      ]);
+
+      expect(await database.select(database.smokingLogs).get(), hasLength(1));
+    },
+  );
 }

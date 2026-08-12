@@ -124,6 +124,41 @@ void main() {
       expect(noNegative.journey.cigarettesAvoided, 0);
     },
   );
+
+  test(
+    'keeps range-selected craving summaries inside the selected local days',
+    () {
+      final snapshot = InsightSnapshot.calculate(
+        profile: _profile(),
+        smokingLogs: const [],
+        cravingSessions: [
+          _sessionAt(
+            'older-session',
+            DateTime(2026, 7, 30, 8),
+            5,
+            4,
+            CravingOutcome.smoked,
+          ),
+          _sessionAt(
+            'recent-session',
+            DateTime(2026, 8, 10, 8),
+            2,
+            1,
+            CravingOutcome.passed,
+          ),
+        ],
+        quitPlan: null,
+        now: now,
+        days: 7,
+      );
+
+      expect(snapshot.craving.totalCompleted, 1);
+      expect(snapshot.craving.averageInitialIntensity, 2);
+      expect(snapshot.craving.averageFinalIntensity, 1);
+      expect(snapshot.craving.outcomes[CravingOutcome.passed], 1);
+      expect(snapshot.craving.outcomes[CravingOutcome.smoked], 0);
+    },
+  );
 }
 
 const _coffee = TriggerTag(id: 'coffee', name: 'Kopi', isDefault: true);
@@ -170,6 +205,22 @@ CravingSession _session(
   id: id,
   startedAt: DateTime(2026, 8, 10, 8),
   endedAt: DateTime(2026, 8, 10, 8, 5),
+  initialIntensity: initial,
+  finalIntensity: finalIntensity,
+  outcome: outcome,
+  note: null,
+);
+
+CravingSession _sessionAt(
+  String id,
+  DateTime startedAt,
+  int initial,
+  int? finalIntensity,
+  CravingOutcome outcome,
+) => CravingSession(
+  id: id,
+  startedAt: startedAt,
+  endedAt: startedAt.add(const Duration(minutes: 5)),
   initialIntensity: initial,
   finalIntensity: finalIntensity,
   outcome: outcome,

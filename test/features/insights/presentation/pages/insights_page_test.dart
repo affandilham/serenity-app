@@ -65,6 +65,37 @@ void main() {
     );
     expect(find.byType(InteractiveViewer), findsOneWidget);
   });
+
+  testWidgets('remains usable on a narrow screen with large text', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          profileRepositoryProvider.overrideWithValue(_ProfileRepository()),
+          smokingLogRepositoryProvider.overrideWithValue(_SmokingRepository()),
+          cravingRepositoryProvider.overrideWithValue(_CravingRepository()),
+          quitPlanRepositoryProvider.overrideWithValue(_QuitPlanRepository()),
+        ],
+        child: MaterialApp(
+          theme: AppTheme.dark,
+          home: MediaQuery(
+            data: const MediaQueryData(textScaler: TextScaler.linear(1.8)),
+            child: const InsightsPage(),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Insight'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }
 
 class _ProfileRepository implements ProfileRepository {

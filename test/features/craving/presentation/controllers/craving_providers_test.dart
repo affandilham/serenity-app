@@ -97,4 +97,34 @@ void main() {
       expect(delayedSession.finalIntensity, 2);
     },
   );
+
+  test(
+    'controller ignores a repeated SOS start while the first is active',
+    () async {
+      final database = AppDatabase.forTesting(NativeDatabase.memory());
+      final now = DateTime(2026, 8, 11, 10);
+      final container = ProviderContainer(
+        overrides: [
+          appDatabaseProvider.overrideWithValue(database),
+          cravingClockProvider.overrideWithValue(() => now),
+        ],
+      );
+      addTearDown(container.dispose);
+      addTearDown(database.close);
+
+      await container.read(cravingSessionControllerProvider.future);
+      final controller = container.read(
+        cravingSessionControllerProvider.notifier,
+      );
+      await Future.wait([
+        controller.start(initialIntensity: 4),
+        controller.start(initialIntensity: 4),
+      ]);
+
+      expect(
+        await database.select(database.cravingSessions).get(),
+        hasLength(1),
+      );
+    },
+  );
 }

@@ -213,7 +213,22 @@ void main() {
             "INSERT INTO smoking_logs (id, smoked_at, created_at) VALUES ('log-1', 0, 0)",
           );
           rawDatabase.execute(
+            "INSERT INTO user_profiles (id, created_at, baseline_cigarettes_per_day, goal_type, onboarding_completed) VALUES ('primary', 0, 8, 'quit', 1)",
+          );
+          rawDatabase.execute(
+            "INSERT INTO motivations (id, text, category, created_at) VALUES ('why', 'Keluarga', 'Keluarga', 0)",
+          );
+          rawDatabase.execute(
+            "INSERT INTO triggers (id, name, created_at) VALUES ('coffee', 'Kopi', 0)",
+          );
+          rawDatabase.execute(
+            "INSERT INTO smoking_log_triggers (smoking_log_id, trigger_id) VALUES ('log-1', 'coffee')",
+          );
+          rawDatabase.execute(
             "INSERT INTO craving_sessions (id, started_at, initial_intensity) VALUES ('craving-1', 0, 3)",
+          );
+          rawDatabase.execute(
+            "INSERT INTO app_metadata (key, value) VALUES ('settings.theme_preference', 'dark')",
           );
           rawDatabase.execute('PRAGMA user_version = 4');
         },
@@ -222,6 +237,14 @@ void main() {
 
     expect(await database.select(database.smokingLogs).get(), hasLength(1));
     expect(await database.select(database.cravingSessions).get(), hasLength(1));
+    expect(await database.select(database.userProfiles).get(), hasLength(1));
+    expect(await database.select(database.motivations).get(), hasLength(1));
+    expect(await database.select(database.triggers).get(), hasLength(1));
+    expect(
+      await database.select(database.smokingLogTriggers).get(),
+      hasLength(1),
+    );
+    expect(await database.select(database.appMetadata).get(), hasLength(1));
     expect(await database.select(database.quitPlans).get(), isEmpty);
     expect(await database.select(database.quitPlanStrategies).get(), isEmpty);
   });

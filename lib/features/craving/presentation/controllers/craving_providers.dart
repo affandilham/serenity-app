@@ -29,6 +29,9 @@ class CravingSessionController extends AsyncNotifier<CravingSession?> {
   }
 
   Future<void> start({required int initialIntensity, String? note}) async {
+    if (state.isLoading) {
+      return;
+    }
     final now = ref.read(cravingClockProvider)();
     state = const AsyncLoading();
     state = await AsyncValue.guard(
@@ -49,6 +52,9 @@ class CravingSessionController extends AsyncNotifier<CravingSession?> {
     required CravingOutcome outcome,
     int? finalIntensity,
   }) async {
+    if (state.isLoading) {
+      return;
+    }
     final activeSession = state.valueOrNull;
     if (activeSession == null) {
       throw StateError('There is no active craving session to finish.');
@@ -71,6 +77,9 @@ class CravingSessionController extends AsyncNotifier<CravingSession?> {
   }
 
   Future<void> extend({required int currentIntensity}) async {
+    if (state.isLoading) {
+      return;
+    }
     final activeSession = state.valueOrNull;
     if (activeSession == null) {
       throw StateError('There is no active craving session to extend.');

@@ -483,11 +483,12 @@ class _MetricRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: Row(
+    padding: const EdgeInsets.only(bottom: AppSpacing.md),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: Text(label)),
-        const SizedBox(width: AppSpacing.md),
+        Text(label),
+        const SizedBox(height: AppSpacing.xs),
         Text(value, style: Theme.of(context).textTheme.titleMedium),
       ],
     ),
@@ -510,28 +511,31 @@ class _LabeledBars extends StatelessWidget {
       children: [
         for (final row in rows)
           Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-            child: Row(
+            padding: const EdgeInsets.only(bottom: AppSpacing.md),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(width: 112, child: Text(row.label)),
-                Expanded(
-                  child: Semantics(
-                    label: '${row.label}, ${row.value}',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(99),
-                      child: LinearProgressIndicator(
-                        value: maximum == 0 ? 0 : row.value / maximum,
-                        minHeight: 10,
-                        color: color,
-                        backgroundColor: color.withValues(alpha: 0.14),
+                Text(row.label),
+                const SizedBox(height: AppSpacing.xs),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Semantics(
+                        label: '${row.label}, ${row.value}',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(99),
+                          child: LinearProgressIndicator(
+                            value: maximum == 0 ? 0 : row.value / maximum,
+                            minHeight: 10,
+                            color: color,
+                            backgroundColor: color.withValues(alpha: 0.14),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                SizedBox(
-                  width: 20,
-                  child: Text('${row.value}', textAlign: TextAlign.end),
+                    const SizedBox(width: AppSpacing.sm),
+                    Text('${row.value}'),
+                  ],
                 ),
               ],
             ),

@@ -4,7 +4,7 @@
 
 ## Current Milestone
 
-**08 — Polish, Accessibility & Testing**
+**Serenity MVP Complete**
 
 ## Milestones
 
@@ -15,7 +15,7 @@
 - [x] 05 Quit Plan & Slip Handling
 - [x] 06 Insights & Journey
 - [x] 07 Notifications, Settings & Export
-- [ ] 08 Polish, Accessibility & Testing
+- [x] 08 Polish, Accessibility & Testing
 
 ## Stable Product Decisions
 
@@ -195,18 +195,30 @@ use the existing `app_metadata` table and are removed by Delete All Data.
   database file name, `serenity_app` package, and current Android/iOS IDs are
   intentionally retained technical names to protect existing installations and
   data.
+- Milestone 08 final audit verified the prior milestones against their source,
+  persistence paths, migrations, and regression tests. It corrected range
+  filtering for craving summaries so 7/30-day insight values use only sessions
+  in the selected local-day range, and added in-flight guards that prevent a
+  repeated quick-log or SOS action from creating duplicate local records.
+- Accessibility and responsive checks cover semantic chart labels, explicit
+  icon tooltips, 44+ logical-pixel primary controls, light/dark themes, and an
+  Insights widget flow at 320 logical pixels with 1.8x text scaling. Insight
+  metrics and progress bars now stack their labels to avoid narrow-screen text
+  clipping. Performance review found timestamp-driven SOS ticking only while
+  visible, lazy Home timelines, scoped Riverpod consumers, and no idle visual
+  animation loops; no broad state-management rewrite was justified.
+- The version-4-to-5 migration regression now verifies preservation of profile,
+  motivations, trigger links, craving history, and settings metadata in
+  addition to prior migration coverage. No new schema migration was needed.
 
 ## Known Issues
 
-No known issues within completed milestones. Milestone 08 remains for final
-polish, accessibility, and broader test coverage.
+No known product-code issues within the completed MVP scope. Android debug APK
+build validation is still environment-limited on this workstation because no
+Java Runtime is installed (`flutter build apk --debug` fails before Gradle can
+compile). Run that non-destructive build on a JDK-configured machine before
+shipping to a device.
 
 ## Next Agent Instructions
 
-1. Read `docs/APP_SPEC.md`.
-2. Read this file.
-3. Read `docs/milestones/08_POLISH_TESTING.md` completely.
-4. Inspect the completed feature implementations and current test suite
-   before editing.
-5. Work only on Milestone 08.
-6. Run formatter, analyzer, and tests before marking anything complete.
+Serenity MVP is complete. Do not begin Phase 2 without explicit user direction.

@@ -51,6 +51,9 @@ class InsightSnapshot {
         chartLogCount++;
         countByDay.update(day, (value) => value + 1, ifAbsent: () => 1);
         timeBuckets[_bucketIndexForHour(localTime.hour)]++;
+        if (log.cravingLevel != null) {
+          smokingCravings.add(log.cravingLevel!);
+        }
         for (final trigger in log.triggers) {
           final accumulator = triggerCounts.putIfAbsent(
             trigger.id,
@@ -58,9 +61,6 @@ class InsightSnapshot {
           );
           accumulator.count++;
         }
-      }
-      if (log.cravingLevel != null) {
-        smokingCravings.add(log.cravingLevel!);
       }
     }
 
@@ -108,21 +108,23 @@ class InsightSnapshot {
               !session.endedAt!.isAfter(now),
         )
         .toList();
-    final completedInChartRange = completedSessions.where((session) {
-      final day = startOfLocalDay(session.startedAt);
-      return !day.isBefore(chartStart) && !day.isAfter(localToday);
-    });
-    final initialValues = completedSessions
+    final completedInChartRange = completedSessions
+        .where((session) {
+          final day = startOfLocalDay(session.startedAt);
+          return !day.isBefore(chartStart) && !day.isAfter(localToday);
+        })
+        .toList(growable: false);
+    final initialValues = completedInChartRange
         .map((session) => session.initialIntensity)
         .toList();
-    final finalValues = completedSessions
+    final finalValues = completedInChartRange
         .map((session) => session.finalIntensity)
         .whereType<int>()
         .toList();
     final outcomeCounts = <CravingOutcome, int>{
       for (final outcome in CravingOutcome.values) outcome: 0,
     };
-    for (final session in completedSessions) {
+    for (final session in completedInChartRange) {
       outcomeCounts.update(session.outcome!, (value) => value + 1);
     }
     final cravingByDay = <DateTime, List<int>>{};
@@ -149,7 +151,7 @@ class InsightSnapshot {
         averageFinalIntensity: _average(finalValues),
         outcomes: outcomeCounts,
         trend: cravingTrend,
-        totalCompleted: completedSessions.length,
+        totalCompleted: completedInChartRange.length,
       ),
       journey: JourneyInsight.calculate(
         profile: profile,
