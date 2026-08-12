@@ -14,7 +14,8 @@ Before making changes, read these files in order:
 
 1. `docs/APP_SPEC.md`
 2. `docs/PROJECT_STATUS.md`
-3. The active file under `docs/milestones/`
+3. `docs/ENGINEERING_GUIDELINES.md`
+4. The active milestone/task document, if one exists.
 
 Then inspect the existing repository and relevant implementation.
 
@@ -27,31 +28,30 @@ Do not assume the documentation is perfectly synchronized with the code. Existin
 Responsibility is divided as follows:
 
 - `docs/APP_SPEC.md` — product vision, architecture, UX principles, privacy, design system, and overall requirements.
-- `docs/milestones/*.md` — scope and Definition of Done for individual implementation stages.
-- `docs/PROJECT_STATUS.md` — current progress, architectural decisions, migrations, known issues, and active milestone.
+- `docs/PROJECT_STATUS.md` — current progress, architectural decisions, migrations, known issues, and active work.
+- `docs/ENGINEERING_GUIDELINES.md` — detailed maintainability, refactoring, widget composition, Riverpod, and code-organization conventions.
+- `docs/milestones/*.md` — scope and Definition of Done when milestone-based work is active.
 - Source code and tests — current implementation reality.
 
 Never silently change product requirements to make implementation easier.
 
 ---
 
-## 3. Milestone Discipline
+## 3. Task Scope Discipline
 
-Implement **only the active milestone** unless the user explicitly asks otherwise.
+Implement **only the explicitly active task, milestone, or refactor scope** unless the user explicitly asks otherwise.
 
-Do not proactively implement future milestone features.
+If `docs/PROJECT_STATUS.md` identifies an active milestone, follow it completely. If there is no active milestone, follow the user's explicit task and any task-specific document.
 
 Before coding:
 
-1. Identify the active milestone from `docs/PROJECT_STATUS.md`.
-2. Read its complete milestone file.
+1. Identify the active task or milestone.
+2. Read its complete requirements.
 3. Inspect relevant existing code.
 4. Produce a short implementation plan.
-5. Verify that the plan stays inside milestone scope.
+5. Verify that the plan stays inside scope.
 
-If a useful change belongs to a future milestone, mention it in the completion report instead of implementing it.
-
-Respect every `Out of Scope` section.
+Do not proactively begin Phase 2, future features, or unrelated refactors. If a useful change is outside scope, report it instead of implementing it.
 
 ---
 
@@ -130,6 +130,25 @@ Prefer:
 - narrow Riverpod providers,
 - explicit state transitions,
 - testable pure functions for calculations.
+
+---
+
+## 5A. Maintainability Rules
+
+Follow `docs/ENGINEERING_GUIDELINES.md` for detailed code organization, widget extraction, Riverpod boundaries, prop-drilling prevention, file-size heuristics, helper extraction, and refactoring conventions.
+
+Key invariants:
+
+- Pages should primarily compose feature sections.
+- Prefer semantic feature-local widgets over giant page files.
+- File length is a smell signal, not a hard target.
+- Avoid forwarding provider-derived state/callbacks through intermediate widgets that do not use them.
+- Keep healthy presentational parameters; do not turn every widget into a `ConsumerWidget`.
+- Business calculations must have one canonical implementation outside presentation.
+- Avoid generic dumping grounds such as `utils.dart`, `helpers.dart`, or `common.dart`.
+- Do not split cohesive code into tiny files merely to reduce line count.
+- Prefer composition over premature abstraction or inheritance.
+- Leave touched code slightly better without unnecessarily expanding task scope.
 
 ---
 
@@ -441,7 +460,7 @@ Never hide test failures.
 
 ## 18. Documentation Updates
 
-After completing a milestone:
+After completing a task or milestone:
 
 1. Update the milestone checklist.
 2. Add a concise completion report to the milestone file if that convention is present.
@@ -493,10 +512,10 @@ flutter test
 ```
 
 ### Deferred
-Anything intentionally left for a future milestone.
+Anything intentionally left outside the active task scope.
 
 ### Status
-Whether the active milestone's Definition of Done is fully satisfied.
+Whether the active task is fully satisfied. For milestone work, also state whether its Definition of Done is fully satisfied.
 
 Do not produce a long tutorial unless asked.
 
