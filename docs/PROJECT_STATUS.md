@@ -4,7 +4,7 @@
 
 ## Current Milestone
 
-**06 — Insights & Journey**
+**07 — Notifications, Settings & Export**
 
 ## Milestones
 
@@ -13,7 +13,7 @@
 - [x] 03 Smoking Log & Triggers
 - [x] 04 Craving SOS
 - [x] 05 Quit Plan & Slip Handling
-- [ ] 06 Insights & Journey
+- [x] 06 Insights & Journey
 - [ ] 07 Notifications, Settings & Export
 - [ ] 08 Polish, Accessibility & Testing
 
@@ -60,6 +60,9 @@ lib/
         └── presentation/
     └── quit_plan/
         ├── data/
+        ├── domain/
+        └── presentation/
+    └── insights/
         ├── domain/
         └── presentation/
 ```
@@ -147,18 +150,32 @@ migration test verifies version-4 smoking logs and craving sessions survive.
 - Milestone 04 was re-audited before Quit Plan work. Its persisted five-minute
   flow, all outcomes, controller restoration, migration coverage, and existing
   regression tests satisfy its Definition of Done; no correction was needed.
+- Milestone 05 was audited before Insight work. Its persisted plan/strategy
+  relationships, explicit transitions, Quit Day mode, pure streak calculation,
+  derived slips, and regression coverage satisfy its Definition of Done; no
+  correction was needed.
+- Insights are derived in a pure domain snapshot from existing local profile,
+  smoking-log, craving-session, and quit-plan data. No analytics table or
+  schema migration is needed. Charts and patterns use local calendar days and
+  local clock hours; trigger percentages use all smoking logs in the selected
+  range as their denominator, including logs without triggers.
+- Journey progress deliberately counts only completed local days from the active
+  quit date (or profile creation before a plan is active). This avoids claiming
+  a full baseline benefit for a partial current day. Slip logs reset only the
+  current smoke-free duration through the established QuitProgress semantics;
+  avoided cigarettes and estimated savings remain lifetime-derived progress.
 
 ## Known Issues
 
-No known issues within completed milestones. Richer insights and journey
-metrics, notifications, settings, and export remain intentionally deferred.
+No known issues within completed milestones. Notifications, settings, and
+export remain intentionally deferred to Milestone 07.
 
 ## Next Agent Instructions
 
 1. Read `docs/APP_SPEC.md`.
 2. Read this file.
-3. Read `docs/milestones/06_INSIGHTS.md` completely.
-4. Inspect the Foundation, Onboarding, Smoking Log, and Craving implementations
+3. Read `docs/milestones/07_NOTIFICATIONS_SETTINGS.md` completely.
+4. Inspect the existing notification, profile, and database implementations
    before editing.
-5. Work only on Milestone 06.
+5. Work only on Milestone 07.
 6. Run formatter, analyzer, and tests before marking anything complete.

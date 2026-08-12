@@ -12,13 +12,13 @@ Deliver insights & journey as a complete, testable vertical slice while preservi
 
 ## Scope
 
-- [ ] Daily cigarette chart
-- [ ] Top trigger analysis
-- [ ] Time-of-day patterns
-- [ ] Craving outcomes
-- [ ] Money not spent
-- [ ] Current/longest smoke-free period
-- [ ] Cigarettes avoided
+- [x] Daily cigarette chart
+- [x] Top trigger analysis
+- [x] Time-of-day patterns
+- [x] Craving outcomes
+- [x] Money not spent
+- [x] Current/longest smoke-free period
+- [x] Cigarettes avoided
 
 ## UX Requirements
 
@@ -45,13 +45,13 @@ Deliver insights & journey as a complete, testable vertical slice while preservi
 
 ## Definition of Done
 
-- [ ] Every Scope item is implemented.
-- [ ] Relevant unit/repository/widget tests exist.
-- [ ] No regression in completed milestones.
-- [ ] `dart format .` completed.
-- [ ] `flutter analyze` passes with no unresolved issues.
-- [ ] `flutter test` passes.
-- [ ] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
+- [x] Every Scope item is implemented.
+- [x] Relevant unit/repository/widget tests exist.
+- [x] No regression in completed milestones.
+- [x] `dart format .` completed.
+- [x] `flutter analyze` passes with no unresolved issues.
+- [x] `flutter test` passes.
+- [x] Update `docs/PROJECT_STATUS.md` only after the milestone passes validation.
 
 ## Completion Report
 
@@ -61,3 +61,23 @@ When finished, report:
 3. Tests added and commands run.
 4. Known limitations, if any.
 5. Whether the repository is ready for Milestone 07.
+
+## Completion Report
+
+Completed on 2026-08-11.
+
+1. Added a calm, locally derived Insights page, available from both Home modes,
+   with 7- and 30-day cigarette charts, time-of-day patterns, normalized trigger
+   distribution, craving outcomes/trend, and journey metrics.
+2. Analytics are a pure domain snapshot built from existing profile, smoking-log,
+   craving-session, and quit-plan data. No persistent analytics table, migration,
+   or dependency was added.
+3. Cigarettes avoided, days below baseline, and money not spent use only complete
+   local calendar days. Savings uses only the user-provided pack price and pack
+   size; it is omitted when either value is invalid or unavailable.
+4. Added domain coverage for local-day continuity, trigger percentages, craving
+   outcomes, progress/savings, and clamp behavior, plus a widget test for Insight
+   learning states and range selection. `dart format .`, `flutter analyze`, and
+   `flutter test` pass.
+5. No known limitations within this milestone. The repository is ready for
+   Milestone 07.

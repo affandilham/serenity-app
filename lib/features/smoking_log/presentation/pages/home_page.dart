@@ -7,6 +7,7 @@ import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../craving/presentation/pages/craving_sos_page.dart';
 import '../../../craving/presentation/controllers/craving_providers.dart';
+import '../../../insights/presentation/pages/insights_page.dart';
 import '../../../quit_plan/domain/entities/quit_plan.dart';
 import '../../../quit_plan/presentation/controllers/quit_plan_providers.dart';
 import '../../../quit_plan/presentation/pages/quit_plan_editor_page.dart';
@@ -78,6 +79,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                     onPressed: _openQuitPlan,
                     child: const Text('Buat rencana berhenti'),
                   ),
+                  TextButton(
+                    onPressed: _openInsights,
+                    child: const Text('Lihat insight'),
+                  ),
                   const SizedBox(height: AppSpacing.xxl),
                   Text('Pola hari ini', style: textTheme.titleLarge),
                   const SizedBox(height: AppSpacing.md),
@@ -128,6 +133,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   Future<void> _openQuitPlan() => Navigator.of(
     context,
   ).push(MaterialPageRoute<void>(builder: (_) => const QuitPlanEditorPage()));
+
+  Future<void> _openInsights() => Navigator.of(
+    context,
+  ).push(MaterialPageRoute<void>(builder: (_) => const InsightsPage()));
 }
 
 class _QuitDayHome extends ConsumerWidget {
@@ -231,6 +240,14 @@ class _QuitDayHome extends ConsumerWidget {
                   },
                 ),
                 const SizedBox(height: AppSpacing.md),
+                TextButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const InsightsPage(),
+                    ),
+                  ),
+                  child: const Text('Lihat insight'),
+                ),
                 TextButton(
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
