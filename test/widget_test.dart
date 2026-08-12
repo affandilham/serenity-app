@@ -19,6 +19,8 @@ void main() {
         child: const SerenityApp(),
       ),
     );
+    expect(find.byType(Image), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 900));
     await tester.pumpAndSettle();
 
     expect(find.text('Serenity'), findsOneWidget);
