@@ -64,6 +64,17 @@ void main() {
       findsOneWidget,
     );
     expect(find.byType(InteractiveViewer), findsOneWidget);
+    final horizontalChart = tester.widget<SingleChildScrollView>(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is SingleChildScrollView &&
+            widget.scrollDirection == Axis.horizontal,
+      ),
+    );
+    expect(
+      horizontalChart.controller?.offset,
+      horizontalChart.controller?.position.maxScrollExtent,
+    );
   });
 
   testWidgets('remains usable on a narrow screen with large text', (

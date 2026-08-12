@@ -374,7 +374,7 @@ class _CravingTrend extends StatelessWidget {
   }
 }
 
-class _ScrollableTimeSeries extends StatelessWidget {
+class _ScrollableTimeSeries extends StatefulWidget {
   const _ScrollableTimeSeries({
     required this.pointCount,
     required this.height,
@@ -386,24 +386,66 @@ class _ScrollableTimeSeries extends StatelessWidget {
   final Widget Function(double pointWidth) builder;
 
   @override
+  State<_ScrollableTimeSeries> createState() => _ScrollableTimeSeriesState();
+}
+
+class _ScrollableTimeSeriesState extends State<_ScrollableTimeSeries> {
+  final _scrollController = ScrollController();
+  late bool _wasScrollable = widget.pointCount > 7;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_wasScrollable) {
+      _showLatestDate();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant _ScrollableTimeSeries oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final isScrollable = widget.pointCount > 7;
+    if (isScrollable && !_wasScrollable) {
+      _showLatestDate();
+    }
+    _wasScrollable = isScrollable;
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _showLatestDate() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scrollController.hasClients) {
+        return;
+      }
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final chartWidth = pointCount > 7
-            ? pointCount * 36.0
+        final chartWidth = widget.pointCount > 7
+            ? widget.pointCount * 36.0
             : constraints.maxWidth;
-        final pointWidth = chartWidth / pointCount;
+        final pointWidth = chartWidth / widget.pointCount;
         final chart = SingleChildScrollView(
+          controller: _scrollController,
           scrollDirection: Axis.horizontal,
-          child: SizedBox(width: chartWidth, child: builder(pointWidth)),
+          child: SizedBox(width: chartWidth, child: widget.builder(pointWidth)),
         );
         return SizedBox(
-          height: height,
+          height: widget.height,
           child: Semantics(
-            label: pointCount > 7
+            label: widget.pointCount > 7
                 ? 'Cubit untuk memperbesar grafik, lalu geser ke samping untuk melihat semua tanggal.'
                 : null,
-            child: pointCount > 7
+            child: widget.pointCount > 7
                 ? InteractiveViewer(
                     panEnabled: false,
                     minScale: 1,
